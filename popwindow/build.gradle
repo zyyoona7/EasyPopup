@@ -28,12 +28,12 @@ ext {
     bintrayName = 'popupwindow'//bintray上的项目名
 
     publishedGroupId = 'com.zyyoona7'//JCenter的GroupId
-    artifact = 'popupwindow'//JCenter的ArtifactId
+    artifact = 'popwindow'//JCenter的ArtifactId
 
-    siteUrl = 'https://github.com/zyyoona7/popupwindow'
-    gitUrl = 'https://github.com/zyyoona7/popupwindow'
+    siteUrl = 'https://github.com/zyyoona7/PopupWindowUtil'
+    gitUrl = 'https://github.com/zyyoona7/PopupWindowUtil'
 
-    libraryVersion = '1.0.0'//版本号
+    libraryVersion = '1.0.1'//版本号
     libraryName = 'popupwindow'//项目名字，没什么用
     libraryDescription = 'A tool for Android'//项目描述，没什么用
 
