@@ -13,73 +13,85 @@
     tools:context=".MainActivity"
     tools:showIn="@layout/activity_main">
 
-    <TextView
-        android:id="@+id/text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="横向铺满全屏" />
-
-    <Button
-        android:id="@+id/btn_bottom"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="底部" />
+        android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/btn_top"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="顶部" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-    <Button
-        android:id="@+id/btn_bottom_alpha"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="底部(半透明)" />
-    <Button
-        android:id="@+id/btn_top_alpha"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="顶部(半透明)" />
+            <TextView
+                android:id="@+id/text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="横向铺满全屏" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="自适应控件大小" />
+            <Button
+                android:id="@+id/btn_bottom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="底部" />
 
-    <Button
-        android:id="@+id/btn_center_alpha"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="中间(半透明)" />
+            <Button
+                android:id="@+id/btn_top"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="顶部" />
 
-    <Button
-        android:id="@+id/btn_center"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="中间" />
+            <Button
+                android:id="@+id/btn_bottom_alpha"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="底部(半透明)" />
 
-    <Button
-        android:id="@+id/btn_1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="相对控件的左下方(类似下拉菜单)" />
+            <Button
+                android:id="@+id/btn_top_alpha"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="顶部(半透明)" />
 
-    <Button
-        android:id="@+id/btn_4"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="相对控件的右下方(类似下拉菜单)" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="自适应控件大小" />
 
-    <Button
-        android:id="@+id/btn_2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="控件上方弹出" />
+            <Button
+                android:id="@+id/btn_center_alpha"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="中间(半透明)" />
 
-    <Button
-        android:id="@+id/btn_3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="相对控件上方位置自定义" />
+            <Button
+                android:id="@+id/btn_center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="中间" />
+
+            <Button
+                android:id="@+id/btn_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="相对控件的左下方(类似下拉菜单)" />
+
+            <Button
+                android:id="@+id/btn_4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="相对控件的右下方(类似下拉菜单)" />
+
+            <Button
+                android:id="@+id/btn_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="控件上方弹出" />
+
+            <Button
+                android:id="@+id/btn_3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="相对控件上方位置自定义" />
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>
