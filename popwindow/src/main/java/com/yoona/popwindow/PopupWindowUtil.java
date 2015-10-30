@@ -1,5 +1,6 @@
 package com.yoona.popwindow;
 
+import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Rect;
@@ -11,6 +12,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup.LayoutParams;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.PopupWindow;
 
@@ -21,19 +23,27 @@ public class PopupWindowUtil {
     private View root;
     private Drawable background = null;
     private final WindowManager windowManager;
+    //是否设置了透明
+    private boolean isAlpha = false;
+    private ValueAnimator valueAnimator = null;
+    private boolean mOutsideTouchable=true;
 
     public PopupWindowUtil(View anchor) {
         this.anchor = anchor;
-        this.window = new PopupWindow(anchor.getContext());
+        this.window = new MPopupWindow(anchor.getContext());
 
         // 点击window以外，自动关闭
         this.window.setTouchInterceptor(new OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_OUTSIDE) {
-                    // Common.setNormal((Activity)
-                    // PopupWindowUtil.this.anchor.getContext());
-                    PopupWindowUtil.this.window.dismiss();
+                final int x = (int) event.getX();
+                final int y = (int) event.getY();
+                if ((event.getAction() == MotionEvent.ACTION_DOWN)
+                        && ((x < 0) || (x >= window.getWidth()) || (y < 0) || (y >= window.getHeight()))) {
+                    dismiss();
+                    return true;
+                } else if (event.getAction() == MotionEvent.ACTION_OUTSIDE) {
+                    dismiss();
                     return true;
                 }
                 return false;
@@ -44,6 +54,7 @@ public class PopupWindowUtil {
                 .getSystemService(Context.WINDOW_SERVICE);
         onCreate();
     }
+
 
     /**
      * Anything you want to have happen when created. Probably should create a
@@ -75,7 +86,7 @@ public class PopupWindowUtil {
         this.window.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
         this.window.setTouchable(true);
         this.window.setFocusable(true);
-        this.window.setOutsideTouchable(true);
+        this.window.setOutsideTouchable(mOutsideTouchable);
 
         this.window.setContentView(this.root);
         // Common.setGray((Activity) anchor.getContext());
@@ -101,24 +112,10 @@ public class PopupWindowUtil {
         this.window.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
         this.window.setTouchable(true);
         this.window.setFocusable(true);
-        this.window.setOutsideTouchable(true);
+        this.window.setOutsideTouchable(mOutsideTouchable);
 
         this.window.setContentView(this.root);
         // Common.setGray((Activity) anchor.getContext());
-    }
-
-    /**
-     * findViewById方法
-     *
-     * @param id
-     * @return
-     */
-    public View findId(int id) {
-        if (this.root == null) {
-            throw new IllegalStateException(
-                    "setContentView was not called with a view to display.");
-        }
-        return this.root.findViewById(id);
     }
 
     /**
@@ -141,7 +138,7 @@ public class PopupWindowUtil {
         this.window.setHeight(WindowManager.LayoutParams.MATCH_PARENT);
         this.window.setTouchable(true);
         this.window.setFocusable(true);
-        this.window.setOutsideTouchable(true);
+        this.window.setOutsideTouchable(mOutsideTouchable);
 
         this.window.setContentView(this.root);
         // Common.setGray((Activity) anchor.getContext());
@@ -150,7 +147,7 @@ public class PopupWindowUtil {
     /**
      * 横向铺满全屏，带有半透明效果，准备show
      */
-    private void preShowAllScreen(Activity activity) {
+    private void preShowAllScreen() {
         if (this.root == null) {
             throw new IllegalStateException(
                     "setContentView was not called with a view to display.");
@@ -163,12 +160,12 @@ public class PopupWindowUtil {
             this.window.setBackgroundDrawable(this.background);
         }
 
-        setBackgroundAlpha(0.5f, activity);
+        dimBackgroundWithAnimation(1.0f, 0.5f);
         this.window.setWidth(WindowManager.LayoutParams.MATCH_PARENT);
         this.window.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
         this.window.setTouchable(true);
         this.window.setFocusable(true);
-        this.window.setOutsideTouchable(true);
+        this.window.setOutsideTouchable(mOutsideTouchable);
 
         this.window.setContentView(this.root);
         // Common.setGray((Activity) anchor.getContext());
@@ -177,7 +174,8 @@ public class PopupWindowUtil {
     /**
      * 自适应view大小，带有半透明效果，准备show
      */
-    private void preShowAlpha(Activity activity) {
+    private void preShowAlpha() {
+
         if (this.root == null) {
             throw new IllegalStateException(
                     "setContentView was not called with a view to display.");
@@ -190,16 +188,31 @@ public class PopupWindowUtil {
             this.window.setBackgroundDrawable(this.background);
         }
 
-        setBackgroundAlpha(0.5f, activity);
+        dimBackgroundWithAnimation(1.0f, 0.5f);
         this.window.setWidth(WindowManager.LayoutParams.WRAP_CONTENT);
         this.window.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
         this.window.setTouchable(true);
         this.window.setFocusable(true);
-        this.window.setOutsideTouchable(true);
+        this.window.setOutsideTouchable(mOutsideTouchable);
 
         this.window.setContentView(this.root);
         // Common.setGray((Activity) anchor.getContext());
     }
+
+    /**
+     * findViewById方法
+     *
+     * @param id
+     * @return
+     */
+    public View findId(int id) {
+        if (this.root == null) {
+            throw new IllegalStateException(
+                    "setContentView was not called with a view to display.");
+        }
+        return this.root.findViewById(id);
+    }
+
 
     /**
      * 设置popupWindow背景颜色
@@ -210,21 +223,54 @@ public class PopupWindowUtil {
         this.background = background;
     }
 
+    public void setOutsideTouchable(boolean touchable){
+        this.mOutsideTouchable=touchable;
+    }
+
     /**
-     * 设置添加屏幕的背景透明度
+     * 调整窗口的透明度(无动画)
      *
-     * @param bgAlpha 屏幕透明度0.0-1.0 1表示完全不透明
+     * @param bgDim
+     * @param bgAlpha
      */
-    public void setBackgroundAlpha(float bgAlpha, Activity activity) {
-        WindowManager.LayoutParams lp = activity.getWindow()
+    private void dimBackground(float bgDim, float bgAlpha) {
+        WindowManager.LayoutParams lp = ((Activity) this.anchor.getContext()).getWindow()
                 .getAttributes();
         lp.alpha = bgAlpha;
-        activity.getWindow().setAttributes(lp);
+        lp.dimAmount = bgDim;
+        ((Activity) this.anchor.getContext()).getWindow().setAttributes(lp);
+        ((Activity) this.anchor.getContext()).getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+        isAlpha = true;
+    }
+
+    /**
+     * 调整窗口的透明度(有动画)
+     *
+     * @param from>=0&&from<=1.0f
+     * @param to>=0&&to<=1.0f
+     */
+    private void dimBackgroundWithAnimation(final float from, final float to) {
+        final Window window = ((Activity) this.anchor.getContext()).getWindow();
+        ((Activity) this.anchor.getContext()).getWindow().setDimAmount(from);
+        ((Activity) this.anchor.getContext()).getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+        valueAnimator = ValueAnimator.ofFloat(from, to);
+        valueAnimator.setDuration(500);
+        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                WindowManager.LayoutParams params = window.getAttributes();
+                params.alpha = (Float) animation.getAnimatedValue();
+                window.setAttributes(params);
+            }
+        });
+
+        valueAnimator.start();
+        isAlpha = true;
     }
 
 
     /**
-     * Sets the content view. Probably should be called from {@link onCreate}
+     * Sets the content view. Probably should be called from onCreate
      *
      * @param root the view the popup will display
      */
@@ -245,7 +291,7 @@ public class PopupWindowUtil {
     }
 
     /**
-     * If you want to do anything when {@link dismiss} is called
+     * If you want to do anything when dismiss is called
      *
      * @param listener
      */
@@ -353,25 +399,22 @@ public class PopupWindowUtil {
     /**
      * 带有半透明效果的显示
      * 显示在底部
-     * 需设置setOnDismissListener,执行dismiss(Activity activity)方法，将透明度还原
-     *
-     * @param activity
      */
-    public void showBottomWithAlpha(Activity activity) {
-        this.preShowAllScreen(activity);
+    public void showBottomWithAlpha() {
+        this.preShowAllScreen();
+        Rect rect = new Rect();
+        ((Activity) this.anchor.getContext()).getWindow().getDecorView().getWindowVisibleDisplayFrame(rect);
+        int winHeight = ((Activity) this.anchor.getContext()).getWindow().getDecorView().getHeight();
         this.window.setAnimationStyle(R.style.PushInBottom);
-        this.window.showAtLocation(this.anchor, Gravity.BOTTOM | Gravity.LEFT, 0, 0);
+        this.window.showAtLocation(this.anchor, Gravity.BOTTOM | Gravity.LEFT, 0, winHeight - rect.bottom);
     }
 
     /**
      * 带有半透明效果的显示
      * 显示在中间
-     * 需设置setOnDismissListener,执行dismiss(Activity activity)方法，将透明度还原
-     *
-     * @param activity
      */
-    public void showCenterWithAlpha(Activity activity) {
-        this.preShowAlpha(activity);
+    public void showCenterWithAlpha() {
+        this.preShowAlpha();
         this.window.setAnimationStyle(R.style.GrowFromCenter);
         this.window.showAtLocation(this.anchor, Gravity.CENTER, 0, 0);
     }
@@ -382,26 +425,43 @@ public class PopupWindowUtil {
      */
     public void showBottom() {
         this.preShowWeithScreen();
+        Rect rect = new Rect();
+        ((Activity) this.anchor.getContext()).getWindow().getDecorView().getWindowVisibleDisplayFrame(rect);
+        int winHeight = ((Activity) this.anchor.getContext()).getWindow().getDecorView().getHeight();
         this.window.setAnimationStyle(R.style.PushInBottom);
-        this.window.showAtLocation(this.anchor, Gravity.BOTTOM | Gravity.LEFT, 0, 0);
+        this.window.showAtLocation(this.anchor, Gravity.BOTTOM | Gravity.LEFT, 0, winHeight - rect.bottom);
     }
 
     /**
      * 显示顶部
      * 横向铺满全屏
-     *
-     * @param activity
      */
-    public void showTop(Activity activity) {
+    public void showTop() {
         this.preShowWeithScreen();
         this.window.setAnimationStyle(R.style.PushInTop);
         int result = 0;
-        int resourceId = activity.getResources().getIdentifier("status_bar_height", "dimen", "android");
+        int resourceId = this.anchor.getContext().getResources().getIdentifier("status_bar_height", "dimen", "android");
         if (resourceId > 0) {
-            result = activity.getResources().getDimensionPixelSize(resourceId);
+            result = this.anchor.getContext().getResources().getDimensionPixelSize(resourceId);
         }
         this.window.showAtLocation(this.anchor, Gravity.TOP | Gravity.LEFT, 0, result);
     }
+
+    /**
+     * 显示顶部(带透明效果)
+     * 横向铺满全屏
+     */
+    public void showTopWithAlpha() {
+        this.preShowAllScreen();
+        this.window.setAnimationStyle(R.style.PushInTop);
+        int result = 0;
+        int resourceId = this.anchor.getContext().getResources().getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            result = this.anchor.getContext().getResources().getDimensionPixelSize(resourceId);
+        }
+        this.window.showAtLocation(this.anchor, Gravity.TOP | Gravity.LEFT, 0, result);
+    }
+
 
     /**
      * 关闭popupWindow
@@ -410,14 +470,26 @@ public class PopupWindowUtil {
         this.window.dismiss();
     }
 
-    /**
-     * 关闭popupWindow，并设置透明度为不透明
-     * 搭配设置透明度效果使用
-     *
-     * @param activity
-     */
-    public void dismiss(Activity activity) {
-        setBackgroundAlpha(1.0f, activity);
-        this.window.dismiss();
+
+    class MPopupWindow extends PopupWindow {
+        public MPopupWindow(Context context) {
+            super(context, null);
+        }
+
+        public MPopupWindow(View contentView) {
+            super(contentView, 0, 0);
+        }
+
+        @Override
+        public void dismiss() {
+            if (isAlpha) {
+                if (valueAnimator != null && valueAnimator.isRunning()) {
+                    valueAnimator.cancel();
+                }
+                dimBackground(0.5f, 1.0f);
+                isAlpha = false;
+            }
+            super.dismiss();
+        }
     }
 }

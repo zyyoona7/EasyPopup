@@ -1,5 +1,6 @@
 package com.yoona.popupwindowutil;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -48,14 +49,17 @@ public class MainActivity extends AppCompatActivity {
         btn2.setOnClickListener(v1 -> {
             PopupWindowUtil popupWindow = new PopupWindowUtil(btn2);
             popupWindow.setContentView(R.layout.popup_window);
-            popupWindow.showTop(this);
+            popupWindow.showTop();
         });
         Button btn3 = (Button) findViewById(R.id.btn_bottom_alpha);
         btn3.setOnClickListener(v2 -> {
-            PopupWindowUtil popupWindow = new PopupWindowUtil(btn3);
+            startActivity(new Intent(this, Main2Activity.class));
+        });
+        Button btn10 = (Button) findViewById(R.id.btn_top_alpha);
+        btn10.setOnClickListener(v10 -> {
+            PopupWindowUtil popupWindow = new PopupWindowUtil(btn2);
             popupWindow.setContentView(R.layout.popup_window);
-            popupWindow.showBottomWithAlpha(this);
-            popupWindow.setOnDismissListener(() -> popupWindow.dismiss(this));
+            popupWindow.showTopWithAlpha();
         });
         Button btn4 = (Button) findViewById(R.id.btn_center);
         btn4.setOnClickListener(v3 -> {
@@ -67,8 +71,8 @@ public class MainActivity extends AppCompatActivity {
         btn5.setOnClickListener(v4 -> {
             PopupWindowUtil popupWindow = new PopupWindowUtil(btn5);
             popupWindow.setContentView(R.layout.popup_window);
-            popupWindow.showCenterWithAlpha(this);
-            popupWindow.setOnDismissListener(() -> popupWindow.dismiss(this));
+            popupWindow.showCenterWithAlpha();
+            popupWindow.setOnDismissListener(() -> popupWindow.dismiss());
         });
         Button btn6 = (Button) findViewById(R.id.btn_1);
         btn6.setOnClickListener(v5 -> {
