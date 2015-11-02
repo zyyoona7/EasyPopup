@@ -36,13 +36,7 @@ public class PopupWindowUtil {
         this.window.setTouchInterceptor(new OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                final int x = (int) event.getX();
-                final int y = (int) event.getY();
-                if ((event.getAction() == MotionEvent.ACTION_DOWN)
-                        && ((x < 0) || (x >= window.getWidth()) || (y < 0) || (y >= window.getHeight()))) {
-                    dismiss();
-                    return true;
-                } else if (event.getAction() == MotionEvent.ACTION_OUTSIDE) {
+                if (event.getAction() == MotionEvent.ACTION_OUTSIDE) {
                     dismiss();
                     return true;
                 }
