@@ -486,7 +486,7 @@ public class PopupWindowUtil {
                 if (valueAnimator != null && valueAnimator.isRunning()) {
                     valueAnimator.cancel();
                 }
-                dimBackground(0.1f, 1.0f);
+                dimBackground(0.0f, 1.0f);
                 isAlpha = false;
             }
             super.dismiss();
