@@ -26,7 +26,7 @@ public class PopupWindowUtil {
     //是否设置了透明
     private boolean isAlpha = false;
     private ValueAnimator valueAnimator = null;
-    private boolean mOutsideTouchable = true;
+    private boolean mOutsideTouchable=true;
 
     public PopupWindowUtil(View anchor) {
         this.anchor = anchor;
@@ -36,11 +36,15 @@ public class PopupWindowUtil {
         this.window.setTouchInterceptor(new OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if (mOutsideTouchable) {
-                    if (event.getAction() == MotionEvent.ACTION_OUTSIDE) {
-                        dismiss();
-                        return true;
-                    }
+                final int x = (int) event.getX();
+                final int y = (int) event.getY();
+                if ((event.getAction() == MotionEvent.ACTION_DOWN)
+                        && ((x < 0) || (x >= window.getWidth()) || (y < 0) || (y >= window.getHeight()))) {
+                    dismiss();
+                    return true;
+                } else if (event.getAction() == MotionEvent.ACTION_OUTSIDE) {
+                    dismiss();
+                    return true;
                 }
                 return false;
             }
@@ -219,8 +223,8 @@ public class PopupWindowUtil {
         this.background = background;
     }
 
-    public void setOutsideTouchable(boolean touchable) {
-        this.mOutsideTouchable = touchable;
+    public void setOutsideTouchable(boolean touchable){
+        this.mOutsideTouchable=touchable;
     }
 
     /**
@@ -482,7 +486,7 @@ public class PopupWindowUtil {
                 if (valueAnimator != null && valueAnimator.isRunning()) {
                     valueAnimator.cancel();
                 }
-                dimBackground(0.5f, 1.0f);
+                dimBackground(0.1f, 1.0f);
                 isAlpha = false;
             }
             super.dismiss();
