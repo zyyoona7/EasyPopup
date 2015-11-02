@@ -5,7 +5,7 @@
 ####引入
 ```
 dependencies {
-compile 'com.zyyoona7:popwindow:1.0.4'
+compile 'com.zyyoona7:popwindow:1.0.5'
 }
 ```
 
