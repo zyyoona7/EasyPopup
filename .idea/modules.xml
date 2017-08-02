@@ -3,7 +3,10 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/PopupWindowUtil.iml" filepath="$PROJECT_DIR$/PopupWindowUtil.iml" />
+      <module fileurl="file://$PROJECT_DIR$/PopupWindowUtil.iml" filepath="$PROJECT_DIR$/PopupWindowUtil.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/popwindow/popwindow.iml" filepath="$PROJECT_DIR$/popwindow/popwindow.iml" />
       <module fileurl="file://$PROJECT_DIR$/popwindow/popwindow.iml" filepath="$PROJECT_DIR$/popwindow/popwindow.iml" />
     </modules>
   </component>

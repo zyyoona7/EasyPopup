@@ -1,12 +1,12 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.1"
+    compileSdkVersion 25
+    buildToolsVersion "25.0.1"
 
     defaultConfig {
         minSdkVersion 15
-        targetSdkVersion 23
+        targetSdkVersion 25
         versionCode 1
         versionName "1.0"
     }
@@ -20,33 +20,5 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:23.1.0'
+    compile 'com.android.support:appcompat-v7:25.+'
 }
-ext {
-    bintrayRepo = 'maven'////bintray上的仓库名，一般为maven
-    bintrayName = 'popupwindow'//bintray上的项目名
-
-    publishedGroupId = 'com.zyyoona7'//JCenter的GroupId
-    artifact = 'popwindow'//JCenter的ArtifactId
-
-    siteUrl = 'https://github.com/zyyoona7/PopupWindowUtil'
-    gitUrl = 'https://github.com/zyyoona7/PopupWindowUtil'
-
-    libraryVersion = '1.0.5'//版本号
-    libraryName = 'popupwindow'//项目名字，没什么用
-    libraryDescription = 'A tool for Android'//项目描述，没什么用
-
-    //开发者信息
-    developerId = 'zyyoona7'
-    developerName = 'zyyoona7'
-    developerEmail = ''
-
-    //以上所有信息自行修改，以下不变
-
-    licenseName = 'The Apache Software License, Version 2.0'
-    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-    allLicenses = ["Apache-2.0"]
-}
-apply from: 'https://raw.githubusercontent.com/Jude95/JCenter/master/install.gradle'
-apply from: 'https://raw.githubusercontent.com/Jude95/JCenter/master/bintray.gradle'
