@@ -4,7 +4,7 @@ android {
     buildToolsVersion "25.0.1"
 
     defaultConfig {
-        applicationId "com.yoona.popupwindowutil"
+        applicationId "com.zyyoona7.easypopup"
         minSdkVersion 15
         targetSdkVersion 25
         versionCode 1
@@ -22,6 +22,6 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:25.+'
-    compile 'com.android.support:design:25.+'
-    compile project(':popwindow')
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile project(':lib')
 }

@@ -1,2 +1,2 @@
-include ':app', ':popwindow'
+include ':app', ':lib'
 
