@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:background="@drawable/circle_pop_bg"
+              android:divider="@drawable/divider_vertical_bg"
+              android:orientation="horizontal"
+              android:showDividers="middle">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:text="点赞"
+        android:textColor="#FFFFFF"
+        android:textSize="14sp"
+        android:paddingTop="7dp"
+        android:paddingBottom="7dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:text="评论"
+        android:textColor="#FFFFFF"
+        android:textSize="14sp"
+        />
+</LinearLayout>
