@@ -16,7 +16,13 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".basic.BasicActivity" android:theme="@style/AppTheme.NoActionBar">
+        <activity
+            android:name=".basic.BasicActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
+            android:name=".easypop.EasyPopActivity"
+            android:theme="@style/AppTheme.NoActionBar">
         </activity>
     </application>
 

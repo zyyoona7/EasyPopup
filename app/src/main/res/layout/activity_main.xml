@@ -14,4 +14,9 @@
         android:layout_height="wrap_content"
         android:text="basic"
         android:id="@+id/btn_basic"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Easy"
+        android:id="@+id/btn_easy"/>
 </LinearLayout>
