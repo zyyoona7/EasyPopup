@@ -7,6 +7,7 @@ import com.blankj.utilcode.util.SizeUtils;
 import com.zyyoona7.easypopup.R;
 import com.zyyoona7.easypopup.base.BaseActivity;
 import com.zyyoona7.easypopup.views.TitleBar;
+import com.zyyoona7.lib.BaseEasyPopup;
 import com.zyyoona7.lib.EasyPopup;
 import com.zyyoona7.lib.HorizontalGravity;
 import com.zyyoona7.lib.VerticalGravity;
@@ -15,9 +16,9 @@ public class EasyPopActivity extends BaseActivity {
 
     private TitleBar mTitleBar;
 
-    private EasyPopup mWeiboPop;
-    private EasyPopup mQQPop;
-    private EasyPopup mCirclePop;
+    private BaseEasyPopup mWeiboPop;
+    private BaseEasyPopup mQQPop;
+    private BaseEasyPopup mCirclePop;
 
 
     @Override
