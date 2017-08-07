@@ -1,10 +1,12 @@
 package com.zyyoona7.easypopup.easypop;
 
 import android.graphics.Color;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.SizeUtils;
@@ -17,6 +19,7 @@ import com.zyyoona7.lib.HorizontalGravity;
 import com.zyyoona7.lib.VerticalGravity;
 
 public class EasyPopActivity extends BaseActivity implements View.OnClickListener {
+    private static final String TAG = "EasyPopActivity";
 
     private TitleBar mTitleBar;
 
@@ -152,6 +155,12 @@ public class EasyPopActivity extends BaseActivity implements View.OnClickListene
                 mCirclePop.dismiss();
             }
         });
+        mCirclePop.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                Log.e(TAG, "onDismiss: mCirclePop");
+            }
+        });
     }
 
     private void showCirclePop(View view) {
@@ -162,6 +171,12 @@ public class EasyPopActivity extends BaseActivity implements View.OnClickListene
         mAbovePop = new EasyPopup(this)
                 .setContentView(R.layout.layout_any)
                 .setFocusAndOutsideEnable(true)
+                .setOnDismissListener(new PopupWindow.OnDismissListener() {
+                    @Override
+                    public void onDismiss() {
+                        Log.e(TAG, "onDismiss: mAbovePop");
+                    }
+                })
                 .createPopup();
     }
 
