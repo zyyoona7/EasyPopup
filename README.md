@@ -7,13 +7,229 @@
 
 - 链式调用：除了在传统的 PopupWindow 使用方法之外还加入了更多的方法
 - 带有相对于 AnchorView 的各个方位弹出的方法，弹出 PopupWindow 更轻松、更简单
-- 加入了简单的生命周期方法，自定义 PopupWindow、处理逻辑更方便
+- 支持 PopupWindow 弹出时背景变暗 (API>=18)
+- 加入了简单的生命周期方法，自定义 PopupWindow、处理逻辑更方便、更清晰
 
 ### 效果图
 
 ![EasyPopup](https://github.com/zyyoona7/EasyPopup/blob/master/images/easy_popup.gif)
 
+### 使用
+
+#### 1. 基本使用
+
+**创建 EasyPopup 对象**
+
+可以调用 setXxx() 方法进行属性设置，最后调用 createPopup() 方法实现对PopupWindow的初始化。
+
+```java
+private EasyPopup mCirclePop;
+mCirclePop = new EasyPopup(this)
+        .setContentView(R.layout.layout_circle_comment)
+        .setAnimationStyle(R.style.CirclePopAnim)
+  		//是否允许点击PopupWindow之外的地方消失
+        .setFocusAndOutsideEnable(true)
+        .createPopup();
+```
+
+**初始化 View**
+
+可以调用 getView() 方法来获取 View 对象。
+
+```java
+TextView tvZan=mCirclePop.getView(R.id.tv_zan);
+TextView tvComment=mCirclePop.getView(R.id.tv_comment);
+tvZan.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        ToastUtils.showShort("赞");
+        mCirclePop.dismiss();
+    }
+});
+
+tvComment.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        ToastUtils.showShort("评论");
+        mCirclePop.dismiss();
+    }
+});
+```
+
+**显示**
+
+相对于 view 位置显示
+
+```java
+/**
+ * 相对anchor view显示，适用 宽高不为match_parent
+ *
+ * @param anchor
+ * @param vertGravity  垂直方向的对齐方式
+ * @param horizGravity 水平方向的对齐方式
+ * @param x            水平方向的偏移
+ * @param y            垂直方向的偏移
+ */
+mCirclePop.showAtAnchorView(view, VerticalGravity.CENTER, HorizontalGravity.LEFT, 0, 0);
+```
+
+除了 showAtAnchorView() 方法，内部还保留了 showAsDropDown()、showAtLocation() 方法。
+
+**方位注解介绍**
+
+垂直方向对齐：VerticalGravity
+
+```java
+VerticalGravity.CENTER,//垂直居中
+VerticalGravity.ABOVE,//anchor view之上
+VerticalGravity.BELOW,//anchor view之下
+VerticalGravity.ALIGN_TOP,//与anchor view顶部对齐
+VerticalGravity.ALIGN_BOTTOM,//anchor view底部对齐
+```
+
+水平方向对齐：HorizontalGravity
+
+```java
+HorizontalGravity.CENTER,//水平居中
+HorizontalGravity.LEFT,//anchor view左侧
+HorizontalGravity.RIGHT,//anchor view右侧
+HorizontalGravity.ALIGN_LEFT,//与anchor view左边对齐
+HorizontalGravity.ALIGN_RIGHT,//与anchor view右边对齐
+```
+
+#### 2. 弹出 PopupWindow 并伴随背景变暗
+
+```java
+mCirclePop = new EasyPopup(this)
+        .setContentView(R.layout.layout_circle_comment)
+        .setAnimationStyle(R.style.CirclePopAnim)
+  		//是否允许点击PopupWindow之外的地方消失
+        .setFocusAndOutsideEnable(true)
+  		//允许背景变暗
+  		.setBackgroundDimEnable(true)
+  		//变暗的透明度(0-1)，0为完全透明
+        .setDimValue(0.4f)
+  		//变暗的背景颜色
+  		.setDimColor(Color.YELLOW)
+  		//指定任意 ViewGroup 背景变暗
+  		.setDimView(viewGroup)
+        .createPopup();
+```
+
+备注：背景变暗效果只支持 4.2 以上的版本。
+
+#### 3. 点击 PopupWindow 之外的地方不让其消失
+
+```java
+mCirclePop = new EasyPopup(this)
+        .setContentView(R.layout.layout_circle_comment)
+        .setAnimationStyle(R.style.CirclePopAnim)
+  		//是否允许点击PopupWindow之外的地方消失，
+  		//设置为false点击之外的地方不会消失，但是会响应返回按钮事件
+        .setFocusAndOutsideEnable(false)
+        .createPopup();
+```
+
+#### 4. 自定义 PopupWindow
+
+EasyPopup中自定义了三个生命周期：
+
+- onPopupWindowCreated()：PopupWindow 对象初始化之后调用
+- onPopupWindowViewCreated(View contentView)：PopupWindow 设置完 contentView 和宽高之后调用
+- onPopupWindowDismiss()：PopupWindow dismiss 时调用
+
+自定义 PopupWindow 需继承 BaseCustomPopup 抽象类，实现内部的两个抽象方法：
+
+- initAttributes()：可以在此方法中设置 PopupWindow 需要的属性，该方法在 onPopupWindowCreated() 中调用
+- initViews()：在此方法中初始化 view，该方法在 onPopupWindowViewCreated(View contentView) 中调用
+
+**示例**
+
+```java
+public class ComplexPopup extends BaseCustomPopup {
+    private static final String TAG = "ComplexPopup";
+
+    private Button mOkBtn;
+    private Button mCancelBtn;
+
+    protected ComplexPopup(Context context) {
+        super(context);
+    }
+
+
+    @Override
+    protected void initAttributes() {
+        setContentView(R.layout.layout_complex, 
+                       ViewGroup.LayoutParams.MATCH_PARENT, SizeUtils.dp2px(300));
+        setFocusAndOutsideEnable(false)
+          		.setBackgroundDimEnable(true)
+                .setDimValue(0.5f);
+        //setXxx()
+        //...
+    }
+
+    @Override
+    protected void initViews(View view) {
+        mOkBtn = getView(R.id.btn_ok);
+        mCancelBtn = getView(R.id.btn_cancel);
+
+        mOkBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
+
+        mCancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
+    }
+
+}
+```
+
+```java
+mComplexPopup = new ComplexPopup(this);
+mComplexPopup.setDimView(mComplexBgDimView)
+           .createPopup();
+```
+
+#### 5. 其他方法介绍 
+
+| 方法名                                      | 作用                    | 备注        |
+| :--------------------------------------- | --------------------- | --------- |
+| setContentView(View contentView)         | 设置 contentView        |           |
+| setContentView(@LayoutRes int layoutId)  | 设置 contentView        |           |
+| setWidth(int width)                      | 设置宽                   |           |
+| setHeight(int height)                    | 设置高                   |           |
+| setAnchorView(View view)                 | 设置目标 view             |           |
+| setVerticalGravity(@VerticalGravity int verticalGravity) | 设置垂直方向对齐              |           |
+| setHorizontalGravity(@VerticalGravity int horizontalGravity) | 设置水平方向对齐              |           |
+| setOffsetX(int offsetX)                  | 设置水平偏移                |           |
+| setOffsetY(int offsetY)                  | 设置垂直                  |           |
+| setAnimationStyle(@StyleRes int animationStyle) | 设置动画风格                |           |
+| getContentView()                         | 获取PopupWindow中加载的view | @Nullable |
+| getContext()                             | 获取context             | @Nullable |
+| getPopupWindow()                         | 获取PopupWindow对象       | @Nullable |
+| dismiss()                                | 消失                    |           |
+
+### 感谢
+
+**[RelativePopupWindow](https://github.com/kakajika/RelativePopupWindow)**
+
+**[CustomPopwindow](https://github.com/pinguo-zhouwei/CustomPopwindow)**
+
+**[android-simple-tooltip](https://github.com/douglasjunior/android-simple-tooltip)**
+
+**[EasyDialog](https://github.com/tianzhijiexian/EasyDialog/tree/master/lib)**
+
+**[Android弹窗_PopupWindow详解](http://liangjingkanji.coding.me/2017/02/11/PopupWindow/)**
+
 ### License
+
 ```
 Copyright 2017 zyyoona7
 
