@@ -567,8 +567,9 @@ public class EasyPopup implements PopupWindow.OnDismissListener {
      *
      * @param listener
      */
-    public void setOnDismissListener(PopupWindow.OnDismissListener listener) {
+    public <T extends EasyPopup> T setOnDismissListener(PopupWindow.OnDismissListener listener) {
         this.mOnDismissListener = listener;
+        return (T) this;
     }
 
     /**
