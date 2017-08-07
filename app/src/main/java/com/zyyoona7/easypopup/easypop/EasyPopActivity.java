@@ -5,8 +5,10 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.blankj.utilcode.util.SizeUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.zyyoona7.easypopup.R;
 import com.zyyoona7.easypopup.base.BaseActivity;
 import com.zyyoona7.easypopup.views.TitleBar;
@@ -133,6 +135,23 @@ public class EasyPopActivity extends BaseActivity implements View.OnClickListene
                 .setAnimationStyle(R.style.CirclePopAnim)
                 .setFocusAndOutsideEnable(true)
                 .createPopup();
+        TextView tvZan=mCirclePop.getView(R.id.tv_zan);
+        TextView tvComment=mCirclePop.getView(R.id.tv_comment);
+        tvZan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ToastUtils.showShort("赞");
+                mCirclePop.dismiss();
+            }
+        });
+
+        tvComment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ToastUtils.showShort("评论");
+                mCirclePop.dismiss();
+            }
+        });
     }
 
     private void showCirclePop(View view) {

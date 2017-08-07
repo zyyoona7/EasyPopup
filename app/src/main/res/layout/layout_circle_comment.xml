@@ -18,6 +18,7 @@
         android:textSize="14sp"
         android:paddingTop="7dp"
         android:paddingBottom="7dp"
+        android:id="@+id/tv_zan"
         />
 
     <TextView
@@ -29,5 +30,6 @@
         android:text="评论"
         android:textColor="#FFFFFF"
         android:textSize="14sp"
+        android:id="@+id/tv_comment"
         />
 </LinearLayout>
