@@ -22,15 +22,16 @@ public class ComplexPopup extends BaseCustomPopup {
 
     protected ComplexPopup(Context context) {
         super(context);
-        Log.e(TAG, "ComplexPopup: ");
     }
 
 
     @Override
     protected void initAttributes() {
-        Log.e(TAG, "initAttributes: ");
         setContentView(R.layout.layout_complex, ViewGroup.LayoutParams.MATCH_PARENT, SizeUtils.dp2px(300));
-        setFocusAndOutsideEnable(false);
+        setFocusAndOutsideEnable(false)
+                .setBackgroundDimEnable(true)
+                .setDimValue(0.5f);
+
     }
 
     @Override
@@ -51,6 +52,10 @@ public class ComplexPopup extends BaseCustomPopup {
                 dismiss();
             }
         });
+    }
+
+    public void setAbc(){
+
     }
 
 }

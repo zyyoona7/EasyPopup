@@ -135,8 +135,8 @@ public class EasyPopActivity extends BaseActivity implements View.OnClickListene
                 .setAnimationStyle(R.style.CirclePopAnim)
                 .setFocusAndOutsideEnable(true)
                 .createPopup();
-        TextView tvZan=mCirclePop.getView(R.id.tv_zan);
-        TextView tvComment=mCirclePop.getView(R.id.tv_comment);
+        TextView tvZan = mCirclePop.getView(R.id.tv_zan);
+        TextView tvComment = mCirclePop.getView(R.id.tv_comment);
         tvZan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -201,19 +201,17 @@ public class EasyPopActivity extends BaseActivity implements View.OnClickListene
         mAnyBgDimPop.showAtAnchorView(view, VerticalGravity.ALIGN_BOTTOM, HorizontalGravity.ALIGN_RIGHT);
     }
 
-    private void initGiftPop(){
-        mGiftPopup=new GiftPopup(this)
+    private void initGiftPop() {
+        mGiftPopup = new GiftPopup(this)
                 .createPopup();
     }
 
-    private void showGiftPop(View view){
-        mGiftPopup.showAtLocation(view, Gravity.BOTTOM,0,0);
+    private void showGiftPop(View view) {
+        mGiftPopup.showAtLocation(view, Gravity.BOTTOM, 0, 0);
     }
 
     private void initComplexPop() {
-        mComplexPopup = new ComplexPopup(this);
-        mComplexPopup.setBackgroundDimEnable(true)
-                .setDimValue(0.5f)
+        mComplexPopup = new ComplexPopup(this)
                 .setDimView(mComplexBgDimView)
                 .createPopup();
     }

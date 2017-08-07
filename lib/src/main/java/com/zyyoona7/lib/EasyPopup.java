@@ -11,6 +11,7 @@ import android.support.annotation.FloatRange;
 import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.annotation.StyleRes;
 import android.support.v4.widget.PopupWindowCompat;
@@ -422,10 +423,10 @@ public class EasyPopup implements PopupWindow.OnDismissListener {
      * 相对anchor view显示，适用 宽高不为match_parent
      *
      * @param anchor
-     * @param vertGravity
-     * @param horizGravity
-     * @param x
-     * @param y
+     * @param vertGravity  垂直方向的对齐方式
+     * @param horizGravity 水平方向的对齐方式
+     * @param x            水平方向的偏移
+     * @param y            垂直方向的偏移
      */
     public void showAtAnchorView(@NonNull View anchor, @VerticalGravity final int vertGravity, @HorizontalGravity int horizGravity, int x, int y) {
         if (mPopupWindow == null) {
@@ -572,6 +573,7 @@ public class EasyPopup implements PopupWindow.OnDismissListener {
 
     /**
      * 处理背景变暗
+     * https://blog.nex3z.com/2016/12/04/%E5%BC%B9%E5%87%BApopupwindow%E5%90%8E%E8%AE%A9%E8%83%8C%E6%99%AF%E5%8F%98%E6%9A%97%E7%9A%84%E6%96%B9%E6%B3%95/
      */
     private void handleBackgroundDim() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
