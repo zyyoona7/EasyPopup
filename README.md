@@ -27,7 +27,7 @@ private EasyPopup mCirclePop;
 mCirclePop = new EasyPopup(this)
         .setContentView(R.layout.layout_circle_comment)
         .setAnimationStyle(R.style.CirclePopAnim)
-  		//是否允许点击PopupWindow之外的地方消失
+  	//是否允许点击PopupWindow之外的地方消失
         .setFocusAndOutsideEnable(true)
         .createPopup();
 ```
@@ -103,16 +103,16 @@ HorizontalGravity.ALIGN_RIGHT,//与anchor view右边对齐
 mCirclePop = new EasyPopup(this)
         .setContentView(R.layout.layout_circle_comment)
         .setAnimationStyle(R.style.CirclePopAnim)
-  		//是否允许点击PopupWindow之外的地方消失
+  	//是否允许点击PopupWindow之外的地方消失
         .setFocusAndOutsideEnable(true)
-  		//允许背景变暗
-  		.setBackgroundDimEnable(true)
-  		//变暗的透明度(0-1)，0为完全透明
+  	//允许背景变暗
+  	.setBackgroundDimEnable(true)
+  	//变暗的透明度(0-1)，0为完全透明
         .setDimValue(0.4f)
-  		//变暗的背景颜色
-  		.setDimColor(Color.YELLOW)
-  		//指定任意 ViewGroup 背景变暗
-  		.setDimView(viewGroup)
+  	//变暗的背景颜色
+  	.setDimColor(Color.YELLOW)
+  	//指定任意 ViewGroup 背景变暗
+  	.setDimView(viewGroup)
         .createPopup();
 ```
 
@@ -124,8 +124,8 @@ mCirclePop = new EasyPopup(this)
 mCirclePop = new EasyPopup(this)
         .setContentView(R.layout.layout_circle_comment)
         .setAnimationStyle(R.style.CirclePopAnim)
-  		//是否允许点击PopupWindow之外的地方消失，
-  		//设置为false点击之外的地方不会消失，但是会响应返回按钮事件
+  	//是否允许点击PopupWindow之外的地方消失，
+  	//设置为false点击之外的地方不会消失，但是会响应返回按钮事件
         .setFocusAndOutsideEnable(false)
         .createPopup();
 ```
@@ -162,7 +162,7 @@ public class ComplexPopup extends BaseCustomPopup {
         setContentView(R.layout.layout_complex, 
                        ViewGroup.LayoutParams.MATCH_PARENT, SizeUtils.dp2px(300));
         setFocusAndOutsideEnable(false)
-          		.setBackgroundDimEnable(true)
+          	.setBackgroundDimEnable(true)
                 .setDimValue(0.5f);
         //setXxx()
         //...
