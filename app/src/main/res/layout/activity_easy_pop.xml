@@ -83,6 +83,6 @@
         android:id="@+id/btn_complex"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="复杂的弹窗"
+        android:text="复杂的弹窗点击外面不可消失"
         android:textSize="14sp"/>
 </LinearLayout>

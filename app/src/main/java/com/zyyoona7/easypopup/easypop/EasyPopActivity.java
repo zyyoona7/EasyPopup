@@ -1,6 +1,7 @@
 package com.zyyoona7.easypopup.easypop;
 
 import android.graphics.Color;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -33,6 +34,7 @@ public class EasyPopActivity extends BaseActivity implements View.OnClickListene
     private EasyPopup mAbovePop;
     private EasyPopup mBgDimPop;
     private EasyPopup mAnyBgDimPop;
+    private GiftPopup mGiftPopup;
     private ComplexPopup mComplexPopup;
 
 
@@ -64,6 +66,7 @@ public class EasyPopActivity extends BaseActivity implements View.OnClickListene
         initAbovePop();
         initBgDimPop();
         initAnyBgDimPop();
+        initGiftPop();
         initComplexPop();
     }
 
@@ -179,6 +182,15 @@ public class EasyPopActivity extends BaseActivity implements View.OnClickListene
         mAnyBgDimPop.showAtAnchorView(view, VerticalGravity.ALIGN_BOTTOM, HorizontalGravity.ALIGN_RIGHT);
     }
 
+    private void initGiftPop(){
+        mGiftPopup=new GiftPopup(this)
+                .createPopup();
+    }
+
+    private void showGiftPop(View view){
+        mGiftPopup.showAtLocation(view, Gravity.BOTTOM,0,0);
+    }
+
     private void initComplexPop() {
         mComplexPopup = new ComplexPopup(this);
         mComplexPopup.setBackgroundDimEnable(true)
@@ -210,6 +222,7 @@ public class EasyPopActivity extends BaseActivity implements View.OnClickListene
                 showAnyBgDimPop(v);
                 break;
             case R.id.btn_gift:
+                showGiftPop(v);
                 break;
             case R.id.btn_complex:
                 showComplexPop(v);

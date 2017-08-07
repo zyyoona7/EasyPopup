@@ -29,7 +29,7 @@ import android.widget.PopupWindow;
 /**
  * Created by zyyoona7 on 2017/8/3.
  * <p>
- * PopupWindow封装基类
+ * PopupWindow封装
  */
 
 public class EasyPopup implements PopupWindow.OnDismissListener {
@@ -47,9 +47,9 @@ public class EasyPopup implements PopupWindow.OnDismissListener {
     //布局id
     protected int mLayoutId;
     //获取焦点
-    protected boolean mFocusable;
+    protected boolean mFocusable = true;
     //是否触摸之外dismiss
-    protected boolean mOutsideTouchable;
+    protected boolean mOutsideTouchable = true;
 
     //宽高
     protected int mWidth;
@@ -131,11 +131,10 @@ public class EasyPopup implements PopupWindow.OnDismissListener {
 
         if (!mFocusAndOutsideEnable) {
             //from https://github.com/pinguo-zhouwei/CustomPopwindow
-            // TODO: 2017/8/4 搜索其他方案
             mPopupWindow.setFocusable(true);
             mPopupWindow.setOutsideTouchable(false);
             mPopupWindow.setBackgroundDrawable(null);
-            //注意下面这三个是contentView 不是PopupWindow
+            //注意下面这三个是contentView 不是PopupWindow，响应返回按钮事件
             mPopupWindow.getContentView().setFocusable(true);
             mPopupWindow.getContentView().setFocusableInTouchMode(true);
             mPopupWindow.getContentView().setOnKeyListener(new View.OnKeyListener() {
@@ -159,19 +158,18 @@ public class EasyPopup implements PopupWindow.OnDismissListener {
 
                     if ((event.getAction() == MotionEvent.ACTION_DOWN)
                             && ((x < 0) || (x >= mWidth) || (y < 0) || (y >= mHeight))) {
-                        Log.e(TAG, "out side ");
-                        Log.e(TAG, "width:" + mPopupWindow.getWidth() + "height:" + mPopupWindow.getHeight() + " x:" + x + " y  :" + y);
+                        //outside
                         return true;
                     } else if (event.getAction() == MotionEvent.ACTION_OUTSIDE) {
-                        Log.e(TAG, "out side ...");
+                        //outside
                         return true;
                     }
                     return false;
                 }
             });
         } else {
-            mPopupWindow.setFocusable(true);
-            mPopupWindow.setOutsideTouchable(true);
+            mPopupWindow.setFocusable(mFocusable);
+            mPopupWindow.setOutsideTouchable(mOutsideTouchable);
             mPopupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         }
         mPopupWindow.setOnDismissListener(this);
@@ -333,6 +331,17 @@ public class EasyPopup implements PopupWindow.OnDismissListener {
     }
 
     /**
+     * 使用此方法需要在创建的时候调用setAnchorView()等属性设置{@see setAnchorView()}
+     */
+    public void showAsDropDown() {
+        if (mAnchorView == null) {
+            return;
+        }
+
+        showAsDropDown(mAnchorView, mOffsetX, mOffsetY);
+    }
+
+    /**
      * PopupWindow自带的显示方法
      *
      * @param anchor
@@ -346,7 +355,7 @@ public class EasyPopup implements PopupWindow.OnDismissListener {
             mAnchorView = anchor;
             mOffsetX = offsetX;
             mOffsetY = offsetY;
-            mPopupWindow.getContentView().getViewTreeObserver().addOnGlobalLayoutListener(mOnGlobalLayoutListener);
+            addGlobalLayoutListener(mPopupWindow.getContentView());
             mPopupWindow.showAsDropDown(anchor, offsetX, offsetY);
         }
     }
@@ -356,7 +365,7 @@ public class EasyPopup implements PopupWindow.OnDismissListener {
             handleBackgroundDim();
             mAnchorView = anchor;
             isOnlyGetWH = true;
-            mPopupWindow.getContentView().getViewTreeObserver().addOnGlobalLayoutListener(mOnGlobalLayoutListener);
+            addGlobalLayoutListener(mPopupWindow.getContentView());
             mPopupWindow.showAsDropDown(anchor);
         }
     }
@@ -369,7 +378,7 @@ public class EasyPopup implements PopupWindow.OnDismissListener {
             mOffsetX = offsetX;
             mOffsetY = offsetY;
             isOnlyGetWH = true;
-            mPopupWindow.getContentView().getViewTreeObserver().addOnGlobalLayoutListener(mOnGlobalLayoutListener);
+            addGlobalLayoutListener(mPopupWindow.getContentView());
             PopupWindowCompat.showAsDropDown(mPopupWindow, anchor, offsetX, offsetY, gravity);
         }
     }
@@ -381,13 +390,15 @@ public class EasyPopup implements PopupWindow.OnDismissListener {
             mOffsetX = offsetX;
             mOffsetY = offsetY;
             isOnlyGetWH = true;
-            mPopupWindow.getContentView().getViewTreeObserver().addOnGlobalLayoutListener(mOnGlobalLayoutListener);
+            addGlobalLayoutListener(mPopupWindow.getContentView());
             mPopupWindow.showAtLocation(parent, gravity, offsetX, offsetY);
         }
     }
 
     /**
      * 相对anchor view显示
+     * <p>
+     * 使用此方法需要在创建的时候调用setAnchorView()等属性设置{@see setAnchorView()}
      */
     public void showAtAnchorView() {
         if (mAnchorView == null) {
@@ -429,17 +440,25 @@ public class EasyPopup implements PopupWindow.OnDismissListener {
         //处理背景变暗
         handleBackgroundDim();
         final View contentView = getContentView();
-        contentView.getViewTreeObserver().addOnGlobalLayoutListener(mOnGlobalLayoutListener);
+        addGlobalLayoutListener(contentView);
         contentView.measure(0, View.MeasureSpec.UNSPECIFIED);
         final int measuredW = contentView.getMeasuredWidth();
         final int measuredH = contentView.getMeasuredHeight();
-        Log.e(TAG, "showAtAnchorView: " + measuredH);
 
         x = calculateX(anchor, horizGravity, measuredW, x);
         y = calculateY(anchor, vertGravity, measuredH, y);
         PopupWindowCompat.showAsDropDown(mPopupWindow, anchor, x, y, Gravity.NO_GRAVITY);
     }
 
+    /**
+     * 根据垂直gravity计算y偏移
+     *
+     * @param anchor
+     * @param vertGravity
+     * @param measuredH
+     * @param y
+     * @return
+     */
     private int calculateY(View anchor, int vertGravity, int measuredH, int y) {
         switch (vertGravity) {
             case VerticalGravity.ABOVE:
@@ -467,6 +486,15 @@ public class EasyPopup implements PopupWindow.OnDismissListener {
         return y;
     }
 
+    /**
+     * 根据水平gravity计算x偏移
+     *
+     * @param anchor
+     * @param horizGravity
+     * @param measuredW
+     * @param x
+     * @return
+     */
     private int calculateX(View anchor, int horizGravity, int measuredW, int x) {
         switch (horizGravity) {
             case HorizontalGravity.LEFT:
@@ -514,10 +542,10 @@ public class EasyPopup implements PopupWindow.OnDismissListener {
         mPopupWindow.update(anchor, x, y, width, height);
     }
 
+    //监听器，用于PopupWindow弹出时获取准确的宽高
     private final ViewTreeObserver.OnGlobalLayoutListener mOnGlobalLayoutListener = new ViewTreeObserver.OnGlobalLayoutListener() {
         @Override
         public void onGlobalLayout() {
-            Log.e(TAG, "onGlobalLayout: height=" + getContentView().getHeight());
             mWidth = getContentView().getWidth();
             mHeight = getContentView().getHeight();
             //只获取宽高时，不执行更新操作
@@ -635,6 +663,15 @@ public class EasyPopup implements PopupWindow.OnDismissListener {
     }
 
     /**
+     * 获取context
+     *
+     * @return
+     */
+    public Context getContext() {
+        return mContext;
+    }
+
+    /**
      * 获取PopupWindow对象
      *
      * @return
@@ -687,6 +724,10 @@ public class EasyPopup implements PopupWindow.OnDismissListener {
             mPopupWindow.dismiss();
         }
         onPopupWindowDismiss();
+    }
+
+    private void addGlobalLayoutListener(View contentView) {
+        contentView.getViewTreeObserver().addOnGlobalLayoutListener(mOnGlobalLayoutListener);
     }
 
     private void removeGlobalLayoutListener() {
