@@ -1,4 +1,6 @@
 # EasyPopup
+[![](https://jitpack.io/v/zyyoona7/EasyPopup.svg)](https://jitpack.io/#zyyoona7/EasyPopup)
+
 ### PopupWindow
 
 对 PopupWindow 的封装，使得在项目中使用起来更加简单、方便、快捷
@@ -13,6 +15,24 @@
 ### 效果图
 
 ![EasyPopup](https://github.com/zyyoona7/EasyPopup/blob/master/images/easy_popup.gif)
+
+### 仓库依赖
+
+Step 1. Add it in your root build.gradle at the end of repositories:
+```java
+        allprojects {
+		repositories {
+			...
+			maven { url 'https://jitpack.io' }
+		}
+	}
+```
+Step 2. Add the dependency
+```java
+        dependencies {
+	        compile 'com.github.zyyoona7:EasyPopup:1.0.0'
+	}
+```
 
 ### 使用
 
