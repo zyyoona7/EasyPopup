@@ -9,6 +9,10 @@
 - 带有相对于 AnchorView 的各个方位弹出的方法，弹出 PopupWindow 更轻松、更简单
 - 加入了简单的生命周期方法，自定义 PopupWindow、处理逻辑更方便
 
+### 效果图
+
+![EasyPopup](https://github.com/zyyoona7/EasyPopup/blob/master/images/easy_popup.gif)
+
 ### License
 ```
 Copyright 2017 zyyoona7
