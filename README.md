@@ -30,9 +30,10 @@ Step 1. Add it in your root build.gradle at the end of repositories:
 Step 2. Add the dependency
 ```java
         dependencies {
-	        compile 'com.github.zyyoona7:EasyPopup:1.0.0'
+	        compile 'com.github.zyyoona7:EasyPopup:VERSION_CODE'
 	}
 ```
+最新的[VERSION_CODE](https://github.com/zyyoona7/EasyPopup/releases/tag/1.0.1)
 
 ### 使用
 
