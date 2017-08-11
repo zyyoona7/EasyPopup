@@ -9,7 +9,7 @@
 
 - 链式调用：除了在传统的 PopupWindow 使用方法之外还加入了更多的方法
 - 带有相对于 AnchorView 的各个方位弹出的方法，弹出 PopupWindow 更轻松、更简单
-- 支持 PopupWindow 弹出时背景变暗 (API>=18)
+- 支持 PopupWindow 弹出时背景变暗、指定 ViewGroup 背景变暗、设置变暗颜色等 (API>=18)
 - 加入了简单的生命周期方法，自定义 PopupWindow、处理逻辑更方便、更清晰
 
 ### 效果图
@@ -239,16 +239,11 @@ mComplexPopup.setDimView(mComplexBgDimView)
 
 ### 感谢
 
-**[RelativePopupWindow](https://github.com/kakajika/RelativePopupWindow)**
-
-**[CustomPopwindow](https://github.com/pinguo-zhouwei/CustomPopwindow)**
-
-**[android-simple-tooltip](https://github.com/douglasjunior/android-simple-tooltip)**
-
-**[EasyDialog](https://github.com/tianzhijiexian/EasyDialog/tree/master/lib)**
-
-**[Android弹窗_PopupWindow详解](http://liangjingkanji.coding.me/2017/02/11/PopupWindow/)**
-
+**[RelativePopupWindow](https://github.com/kakajika/RelativePopupWindow)**<br>
+**[CustomPopwindow](https://github.com/pinguo-zhouwei/CustomPopwindow)**<br>
+**[android-simple-tooltip](https://github.com/douglasjunior/android-simple-tooltip)**<br>
+**[EasyDialog](https://github.com/tianzhijiexian/EasyDialog/tree/master/lib)**<br>
+**[Android弹窗_PopupWindow详解](http://liangjingkanji.coding.me/2017/02/11/PopupWindow/)**<br>
 ### License
 
 ```
