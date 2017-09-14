@@ -96,6 +96,8 @@ mCirclePop.showAtAnchorView(view, VerticalGravity.CENTER, HorizontalGravity.LEFT
 
 除了 showAtAnchorView() 方法，内部还保留了 showAsDropDown()、showAtLocation() 方法。
 
+**注意：如果使用 VerticalGravity 和 HorizontalGravity 时，请确保使用之后 PopupWindow 没有超出屏幕边界，如果超出屏幕边界，VerticalGravity 和 HorizontalGravity 可能无效，从而达不到你想要的效果。**[#4](https://github.com/zyyoona7/EasyPopup/issues/4)
+
 **方位注解介绍**
 
 垂直方向对齐：VerticalGravity
