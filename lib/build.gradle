@@ -23,6 +23,6 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    provided 'com.android.support:support-compat:25.3.1'
+    provided fileTree(dir: 'libs', include: ['*.jar'])
+    provided 'com.android.support:support-compat:25.+'
 }
