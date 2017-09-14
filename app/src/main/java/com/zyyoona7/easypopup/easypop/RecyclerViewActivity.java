@@ -45,13 +45,26 @@ public class RecyclerViewActivity extends AppCompatActivity {
         mRvPop = new EasyPopup(this)
                 .setContentView(R.layout.layout_right_pop)
                 .setAnimationStyle(R.style.QQPopAnim)
+//                .setHeight(700)
+//                .setWidth(600)
                 .setFocusAndOutsideEnable(true)
 //                .setBackgroundDimEnable(true)
 //                .setDimValue(0.5f)
 //                .setDimColor(Color.RED)
 //                .setDimView(mTitleBar)
                 .createPopup();
-        mRvPop.getPopupWindow().setClippingEnabled(false);
+
+        //回调在所有Show方法之后updateLocation方法之前执行
+        //只有调用showAtAnchorView方法才会执行updateLocation方法
+        mRvPop.setOnAttachedWindowListener(new EasyPopup.OnAttachedWindowListener() {
+            @Override
+            public void onAttachedWindow(int width, int height, EasyPopup easyPop) {
+                Log.i(TAG, "onAttachedWindow: width=" + width);
+                int offsetX = (getResources().getDisplayMetrics().widthPixels - width) / 2 - getResources().getDimensionPixelSize(R.dimen.dp_30);
+                //重新设置偏移量
+                easyPop.setOffsetX(-offsetX);
+            }
+        });
     }
 
     private void initEvents() {
@@ -63,7 +76,7 @@ public class RecyclerViewActivity extends AppCompatActivity {
                 Log.i(TAG, Arrays.toString(locations));
                 if (locations[1] > getResources().getDisplayMetrics().heightPixels / 2) {
                     mRvPop.showAtAnchorView(view, VerticalGravity.ABOVE, HorizontalGravity.LEFT);
-                }else {
+                } else {
                     mRvPop.showAtAnchorView(view, VerticalGravity.BELOW, HorizontalGravity.LEFT);
                 }
             }
