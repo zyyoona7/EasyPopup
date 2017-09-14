@@ -33,7 +33,7 @@ dependencies {
     compile 'com.github.zyyoona7:EasyPopup:VERSION_CODE'
 }
 ```
-最新的[VERSION_CODE](https://github.com/zyyoona7/EasyPopup/releases/tag/1.0.1)
+最新的[VERSION_CODE](https://github.com/zyyoona7/EasyPopup/releases)
 
 ### 使用
 
