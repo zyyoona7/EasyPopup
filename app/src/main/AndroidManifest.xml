@@ -24,6 +24,8 @@
             android:name=".easypop.EasyPopActivity"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
+        <activity android:name=".easypop.RecyclerViewActivity">
+        </activity>
     </application>
 
 </manifest>

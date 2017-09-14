@@ -6,6 +6,7 @@ import android.widget.Button;
 import com.zyyoona7.easypopup.base.BaseActivity;
 import com.zyyoona7.easypopup.basic.BasicActivity;
 import com.zyyoona7.easypopup.easypop.EasyPopActivity;
+import com.zyyoona7.easypopup.easypop.RecyclerViewActivity;
 
 public class MainActivity extends BaseActivity {
 
@@ -14,6 +15,8 @@ public class MainActivity extends BaseActivity {
     private Button mBasicBtn;
 
     private Button mEasyBtn;
+
+    private Button mRvBtn;
 
     @Override
     protected int setLayoutId() {
@@ -27,8 +30,9 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initViews() {
-        mBasicBtn= (Button) findViewById(R.id.btn_basic);
-        mEasyBtn= (Button) findViewById(R.id.btn_easy);
+        mBasicBtn = (Button) findViewById(R.id.btn_basic);
+        mEasyBtn = (Button) findViewById(R.id.btn_easy);
+        mRvBtn = (Button) findViewById(R.id.btn_recycler);
     }
 
     @Override
@@ -44,6 +48,13 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 goTo(EasyPopActivity.class);
+            }
+        });
+
+        mRvBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goTo(RecyclerViewActivity.class);
             }
         });
     }
