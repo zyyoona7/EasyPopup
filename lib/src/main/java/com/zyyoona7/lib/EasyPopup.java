@@ -11,7 +11,6 @@ import android.support.annotation.FloatRange;
 import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.annotation.StyleRes;
 import android.support.v4.widget.PopupWindowCompat;
@@ -89,6 +88,8 @@ public class EasyPopup implements PopupWindow.OnDismissListener {
     //是否只是获取宽高
     //getViewTreeObserver监听时
     private boolean isOnlyGetWH = true;
+
+    private OnAttachedWindowListener mOnAttachedWindowListener;
 
 
     public EasyPopup(Context context) {
@@ -457,6 +458,7 @@ public class EasyPopup implements PopupWindow.OnDismissListener {
 
         x = calculateX(anchor, horizGravity, measuredW, x);
         y = calculateY(anchor, vertGravity, measuredH, y);
+        Log.i(TAG, "showAtAnchorView: w=" + measuredW + ",y=" + measuredH);
         PopupWindowCompat.showAsDropDown(mPopupWindow, anchor, x, y, Gravity.NO_GRAVITY);
     }
 
@@ -549,6 +551,7 @@ public class EasyPopup implements PopupWindow.OnDismissListener {
         final int measuredH = height;
         x = calculateX(anchor, horizGravity, measuredW, x);
         y = calculateY(anchor, vertGravity, measuredH, y);
+        Log.i(TAG, "updateLocation: x=" + measuredW + ",y=" + measuredH);
         mPopupWindow.update(anchor, x, y, width, height);
     }
 
@@ -558,6 +561,10 @@ public class EasyPopup implements PopupWindow.OnDismissListener {
         public void onGlobalLayout() {
             mWidth = getContentView().getWidth();
             mHeight = getContentView().getHeight();
+            //回调
+            if (mOnAttachedWindowListener != null) {
+                mOnAttachedWindowListener.onAttachedWindow(mWidth, mHeight, EasyPopup.this);
+            }
             //只获取宽高时，不执行更新操作
             if (isOnlyGetWH) {
                 removeGlobalLayoutListener();
@@ -578,6 +585,11 @@ public class EasyPopup implements PopupWindow.OnDismissListener {
      */
     public <T extends EasyPopup> T setOnDismissListener(PopupWindow.OnDismissListener listener) {
         this.mOnDismissListener = listener;
+        return (T) this;
+    }
+
+    public <T extends EasyPopup> T setOnAttachedWindowListener(OnAttachedWindowListener listener) {
+        this.mOnAttachedWindowListener = listener;
         return (T) this;
     }
 
@@ -750,6 +762,22 @@ public class EasyPopup implements PopupWindow.OnDismissListener {
                 getContentView().getViewTreeObserver().removeGlobalOnLayoutListener(mOnGlobalLayoutListener);
             }
         }
+    }
+
+    /**
+     * PopupWindow是否显示在window中
+     * 用于获取准确的PopupWindow宽高，可以重新设置偏移量
+     */
+    public interface OnAttachedWindowListener {
+
+        /**
+         * 在 show方法之后 updateLocation之前执行
+         *
+         * @param width   PopupWindow准确的宽
+         * @param height  PopupWindow准确的高
+         * @param easyPop
+         */
+        void onAttachedWindow(int width, int height, EasyPopup easyPop);
     }
 
 }
