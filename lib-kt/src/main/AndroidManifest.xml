@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 
-          package="com.zyyoona7.lib_kt"
+          package="com.zyyoona7.lib"
 >
 
     <application android:allowBackup="true"

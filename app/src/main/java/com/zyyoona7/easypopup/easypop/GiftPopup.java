@@ -2,15 +2,12 @@ package com.zyyoona7.easypopup.easypop;
 
 import android.content.Context;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.blankj.utilcode.util.SizeUtils;
 import com.zyyoona7.easypopup.R;
-import com.zyyoona7.lib.BaseCustomPopup;
 
 import java.util.ArrayList;
 import java.util.List;

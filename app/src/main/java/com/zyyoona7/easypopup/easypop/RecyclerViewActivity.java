@@ -60,7 +60,8 @@ public class RecyclerViewActivity extends AppCompatActivity {
             @Override
             public void onAttachedWindow(int width, int height, EasyPopup easyPop) {
                 Log.i(TAG, "onAttachedWindow: width=" + width);
-                int offsetX = (getResources().getDisplayMetrics().widthPixels - width) / 2 - getResources().getDimensionPixelSize(R.dimen.dp_30);
+                int offsetX = (getResources().getDisplayMetrics().widthPixels - width) / 2
+                        - getResources().getDimensionPixelSize(R.dimen.dp_30);
                 //重新设置偏移量
                 easyPop.setOffsetX(-offsetX);
             }

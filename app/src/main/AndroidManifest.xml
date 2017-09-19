@@ -26,6 +26,8 @@
         </activity>
         <activity android:name=".easypop.RecyclerViewActivity">
         </activity>
+        <activity android:name=".kt.KotlinActivity">
+        </activity>
     </application>
 
 </manifest>
