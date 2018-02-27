@@ -705,6 +705,15 @@ public class EasyPopup implements PopupWindow.OnDismissListener {
     }
 
     /**
+     * 是否正在显示
+     *
+     * @return
+     */
+    public boolean isShowing() {
+        return mPopupWindow != null && mPopupWindow.isShowing();
+    }
+
+    /**
      * 获取view
      *
      * @param viewId
