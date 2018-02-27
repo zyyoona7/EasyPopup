@@ -7,6 +7,7 @@ import android.widget.Button;
 
 import com.blankj.utilcode.util.SizeUtils;
 import com.zyyoona7.easypopup.R;
+import com.zyyoona7.lib.BaseCustomPopup;
 
 /**
  * Created by zyyoona7 on 2017/8/4.

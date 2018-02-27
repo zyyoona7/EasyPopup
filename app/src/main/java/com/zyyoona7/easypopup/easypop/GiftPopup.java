@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import com.blankj.utilcode.util.SizeUtils;
 import com.zyyoona7.easypopup.R;
+import com.zyyoona7.lib.BaseCustomPopup;
 
 import java.util.ArrayList;
 import java.util.List;
