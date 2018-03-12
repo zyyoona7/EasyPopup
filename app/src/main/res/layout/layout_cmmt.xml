@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="#f0f2f5">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="取消"
+            android:textSize="14sp"
+            android:id="@+id/tv_cancel"
+            android:paddingTop="8dp"
+            android:paddingEnd="8dp"
+            android:paddingStart="8dp"/>
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="确定"
+            android:textSize="14sp"
+            android:id="@+id/tv_ok"
+            android:layout_gravity="end"
+            android:paddingTop="8dp"
+            android:paddingEnd="8dp"
+            android:paddingStart="8dp"/>
+    </FrameLayout>
+    <android.support.v7.widget.AppCompatEditText
+        android:id="@+id/et_cmmt"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="@android:color/white"
+        android:hint="输入评论"
+        android:gravity="top|start"
+        android:textSize="14sp"
+        android:padding="5dp"
+        android:layout_margin="8dp"/>
+</LinearLayout>

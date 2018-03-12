@@ -29,6 +29,7 @@ public class EasyPopActivity extends BaseActivity implements View.OnClickListene
     private Button mBgDimBtn;
     private Button mAnyBgDimBtn;
     private Button mGiftBtn;
+    private Button mCmmtBtn;
     private Button mComplexBtn;
 
     private LinearLayout mComplexBgDimView;
@@ -40,6 +41,7 @@ public class EasyPopActivity extends BaseActivity implements View.OnClickListene
     private EasyPopup mBgDimPop;
     private EasyPopup mAnyBgDimPop;
     private GiftPopup mGiftPopup;
+    private CmmtPopup mCmmtPopup;
     private ComplexPopup mComplexPopup;
 
 
@@ -55,16 +57,17 @@ public class EasyPopActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     protected void initViews() {
-        mTitleBar = (TitleBar) findViewById(R.id.tb_easy);
+        mTitleBar = findViewById(R.id.tb_easy);
         mTitleBar.setTile("Easy Pop");
-        mCircleBtn = (Button) findViewById(R.id.btn_circle_comment);
-        mAboveBtn = (Button) findViewById(R.id.btn_above);
-        mRightBtn = (Button) findViewById(R.id.btn_right);
-        mBgDimBtn = (Button) findViewById(R.id.btn_bg_dim);
-        mAnyBgDimBtn = (Button) findViewById(R.id.btn_bg_dim_any);
-        mGiftBtn = (Button) findViewById(R.id.btn_gift);
-        mComplexBtn = (Button) findViewById(R.id.btn_complex);
-        mComplexBgDimView = (LinearLayout) findViewById(R.id.ll_complex_bg_dim);
+        mCircleBtn = findViewById(R.id.btn_circle_comment);
+        mAboveBtn = findViewById(R.id.btn_above);
+        mRightBtn = findViewById(R.id.btn_right);
+        mBgDimBtn = findViewById(R.id.btn_bg_dim);
+        mAnyBgDimBtn = findViewById(R.id.btn_bg_dim_any);
+        mGiftBtn = findViewById(R.id.btn_gift);
+        mCmmtBtn = findViewById(R.id.btn_pop_cmmt);
+        mComplexBtn = findViewById(R.id.btn_complex);
+        mComplexBgDimView = findViewById(R.id.ll_complex_bg_dim);
         initQQPop();
         initWeiboPop();
         initCirclePop();
@@ -72,6 +75,7 @@ public class EasyPopActivity extends BaseActivity implements View.OnClickListene
         initBgDimPop();
         initAnyBgDimPop();
         initGiftPop();
+        initCmmtPop();
         initComplexPop();
     }
 
@@ -99,6 +103,7 @@ public class EasyPopActivity extends BaseActivity implements View.OnClickListene
         mBgDimBtn.setOnClickListener(this);
         mAnyBgDimBtn.setOnClickListener(this);
         mGiftBtn.setOnClickListener(this);
+        mCmmtBtn.setOnClickListener(this);
         mComplexBtn.setOnClickListener(this);
 
     }
@@ -235,6 +240,32 @@ public class EasyPopActivity extends BaseActivity implements View.OnClickListene
         mComplexPopup.showAtAnchorView(view, VerticalGravity.ABOVE, HorizontalGravity.LEFT);
     }
 
+    private void initCmmtPop(){
+        mCmmtPopup=new CmmtPopup(this)
+                .createPopup();
+        mCmmtPopup.setOnCancelClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mCmmtPopup.isShowing()) {
+                    mCmmtPopup.dismiss();
+                }
+            }
+        });
+
+        mCmmtPopup.setOnOkClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mCmmtPopup.isShowing()) {
+                    mCmmtPopup.dismiss();
+                }
+            }
+        });
+    }
+
+    private void showCmmtPop(View view){
+        mCmmtPopup.showAtLocation(view, Gravity.BOTTOM, 0, 0);
+    }
+
     @Override
     public void onClick(final View v) {
         switch (v.getId()) {
@@ -255,6 +286,9 @@ public class EasyPopActivity extends BaseActivity implements View.OnClickListene
                 break;
             case R.id.btn_gift:
                 showGiftPop(v);
+                break;
+            case R.id.btn_pop_cmmt:
+                showCmmtPop(v);
                 break;
             case R.id.btn_complex:
                 showComplexPop(v);
