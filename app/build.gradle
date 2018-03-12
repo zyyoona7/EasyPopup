@@ -1,13 +1,13 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.1"
+    compileSdkVersion compile_sdk_version
+    buildToolsVersion build_tools_version
 
     defaultConfig {
         applicationId "com.zyyoona7.easypopup"
-        minSdkVersion 15
-        targetSdkVersion 25
+        minSdkVersion min_sdk_version
+        targetSdkVersion target_sdk_version
         versionCode 1
         versionName "1.0"
     }
@@ -25,11 +25,11 @@ dependencies {
     compile project(':lib')
 //    compile project(':lib-kt')
 
-    compile 'com.android.support:appcompat-v7:25.3.1'
-    compile 'com.android.support:recyclerview-v7:25.3.1'
+    compile "com.android.support:appcompat-v7:$support_version"
+    compile "com.android.support:recyclerview-v7:$support_version"
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    compile 'com.blankj:utilcode:1.8.1'
-    compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.26'
+    compile 'com.blankj:utilcode:1.13.3'
+    compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.35'
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 }
 repositories {
