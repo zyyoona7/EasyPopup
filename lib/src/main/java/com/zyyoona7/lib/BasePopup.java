@@ -755,6 +755,22 @@ public abstract class BasePopup<T extends BasePopup> implements PopupWindow.OnDi
         return mPopupWindow;
     }
 
+    public int getVerticalGravity() {
+        return mVerticalGravity;
+    }
+
+    public int getHorizontalGravity() {
+        return mHorizontalGravity;
+    }
+
+    public int getOffsetX() {
+        return mOffsetX;
+    }
+
+    public int getOffsetY() {
+        return mOffsetY;
+    }
+
     /**
      * 是否正在显示
      *

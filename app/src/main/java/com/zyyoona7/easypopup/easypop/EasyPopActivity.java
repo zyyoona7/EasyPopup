@@ -21,6 +21,7 @@ import com.zyyoona7.lib.VerticalGravity;
 public class EasyPopActivity extends BaseActivity implements View.OnClickListener {
     private static final String TAG = "EasyPopActivity";
 
+    // TODO: 2018/5/9 重做Demo 带箭头的背景，微信长按跟随手指位置的弹窗
     private TitleBar mTitleBar;
 
     private Button mCircleBtn;
