@@ -109,7 +109,8 @@ public class EasyPopActivity extends BaseActivity implements View.OnClickListene
     }
 
     private void initQQPop() {
-        mQQPop = new EasyPopup(this)
+        mQQPop = EasyPopup.create()
+                .setContext(this)
                 .setContentView(R.layout.layout_right_pop)
                 .setAnimationStyle(R.style.QQPopAnim)
                 .setFocusAndOutsideEnable(true)
@@ -117,7 +118,7 @@ public class EasyPopActivity extends BaseActivity implements View.OnClickListene
 //                .setDimValue(0.5f)
 //                .setDimColor(Color.RED)
 //                .setDimView(mTitleBar)
-                .createPopup();
+                .apply();
 
     }
 
@@ -126,11 +127,11 @@ public class EasyPopActivity extends BaseActivity implements View.OnClickListene
     }
 
     private void initWeiboPop() {
-        mWeiboPop = new EasyPopup(this)
-                .setContentView(R.layout.layout_center_pop)
+        mWeiboPop = EasyPopup.create()
+                .setContentView(this, R.layout.layout_center_pop)
                 .setAnimationStyle(R.style.WeiboPopAnim)
                 .setFocusAndOutsideEnable(true)
-                .createPopup();
+                .apply();
     }
 
     private void showWeiboPop(View view) {
@@ -138,13 +139,13 @@ public class EasyPopActivity extends BaseActivity implements View.OnClickListene
     }
 
     private void initCirclePop() {
-        mCirclePop = new EasyPopup(this)
-                .setContentView(R.layout.layout_circle_comment)
+        mCirclePop = EasyPopup.create()
+                .setContentView(this, R.layout.layout_circle_comment)
                 .setAnimationStyle(R.style.CirclePopAnim)
                 .setFocusAndOutsideEnable(true)
-                .createPopup();
-        TextView tvZan = mCirclePop.getView(R.id.tv_zan);
-        TextView tvComment = mCirclePop.getView(R.id.tv_comment);
+                .apply();
+        TextView tvZan = mCirclePop.findViewById(R.id.tv_zan);
+        TextView tvComment = mCirclePop.findViewById(R.id.tv_comment);
         tvZan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -173,8 +174,8 @@ public class EasyPopActivity extends BaseActivity implements View.OnClickListene
     }
 
     private void initAbovePop() {
-        mAbovePop = new EasyPopup(this)
-                .setContentView(R.layout.layout_any)
+        mAbovePop = EasyPopup.create()
+                .setContentView(this, R.layout.layout_any)
                 .setFocusAndOutsideEnable(true)
                 .setOnDismissListener(new PopupWindow.OnDismissListener() {
                     @Override
@@ -182,7 +183,7 @@ public class EasyPopActivity extends BaseActivity implements View.OnClickListene
                         Log.e(TAG, "onDismiss: mAbovePop");
                     }
                 })
-                .createPopup();
+                .apply();
     }
 
     private void showAbovePop(View view) {
@@ -194,12 +195,12 @@ public class EasyPopActivity extends BaseActivity implements View.OnClickListene
     }
 
     private void initBgDimPop() {
-        mBgDimPop = new EasyPopup(this)
-                .setContentView(R.layout.layout_any)
+        mBgDimPop = EasyPopup.create()
+                .setContentView(this, R.layout.layout_any)
                 .setFocusAndOutsideEnable(true)
                 .setBackgroundDimEnable(true)
                 .setDimValue(0.4f)
-                .createPopup();
+                .apply();
     }
 
     private void showBgDimPop(View view) {
@@ -207,14 +208,14 @@ public class EasyPopActivity extends BaseActivity implements View.OnClickListene
     }
 
     private void initAnyBgDimPop() {
-        mAnyBgDimPop = new EasyPopup(this)
-                .setContentView(R.layout.layout_any)
+        mAnyBgDimPop = EasyPopup.create()
+                .setContentView(this, R.layout.layout_any)
                 .setFocusAndOutsideEnable(true)
                 .setBackgroundDimEnable(true)
                 .setDimValue(0.4f)
                 .setDimView(mTitleBar)
                 .setDimColor(Color.YELLOW)
-                .createPopup();
+                .apply();
     }
 
     private void showAnyBgDimPop(View view) {
@@ -222,8 +223,9 @@ public class EasyPopActivity extends BaseActivity implements View.OnClickListene
     }
 
     private void initGiftPop() {
-        mGiftPopup = new GiftPopup(this)
-                .createPopup();
+        mGiftPopup = GiftPopup.create()
+                .setContext(this)
+                .apply();
     }
 
     private void showGiftPop(View view) {
@@ -231,38 +233,38 @@ public class EasyPopActivity extends BaseActivity implements View.OnClickListene
     }
 
     private void initComplexPop() {
-        mComplexPopup = new ComplexPopup(this)
+        mComplexPopup = ComplexPopup.create(this)
                 .setDimView(mComplexBgDimView)
-                .createPopup();
+                .apply();
     }
 
     private void showComplexPop(View view) {
         mComplexPopup.showAtAnchorView(view, VerticalGravity.ABOVE, HorizontalGravity.LEFT);
     }
 
-    private void initCmmtPop(){
-        mCmmtPopup=new CmmtPopup(this)
-                .createPopup();
-        mCmmtPopup.setOnCancelClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mCmmtPopup.isShowing()) {
-                    mCmmtPopup.dismiss();
-                }
-            }
-        });
+    private void initCmmtPop() {
+        mCmmtPopup = CmmtPopup.create(this)
+                .setOnCancelClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (mCmmtPopup.isShowing()) {
+                            mCmmtPopup.dismiss();
+                        }
+                    }
+                })
+                .setOnOkClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (mCmmtPopup.isShowing()) {
+                            mCmmtPopup.dismiss();
+                        }
+                    }
+                })
+                .apply();
 
-        mCmmtPopup.setOnOkClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mCmmtPopup.isShowing()) {
-                    mCmmtPopup.dismiss();
-                }
-            }
-        });
     }
 
-    private void showCmmtPop(View view){
+    private void showCmmtPop(View view) {
         mCmmtPopup.showAtLocation(view, Gravity.BOTTOM, 0, 0);
     }
 

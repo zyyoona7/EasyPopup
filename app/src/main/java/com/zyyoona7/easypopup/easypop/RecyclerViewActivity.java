@@ -9,6 +9,7 @@ import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.zyyoona7.easypopup.R;
+import com.zyyoona7.lib.BasePopup;
 import com.zyyoona7.lib.EasyPopup;
 import com.zyyoona7.lib.HorizontalGravity;
 import com.zyyoona7.lib.VerticalGravity;
@@ -42,7 +43,8 @@ public class RecyclerViewActivity extends AppCompatActivity {
     }
 
     private void initPop() {
-        mRvPop = new EasyPopup(this)
+        mRvPop = EasyPopup.create()
+                .setContext(this)
                 .setContentView(R.layout.layout_right_pop)
                 .setAnimationStyle(R.style.QQPopAnim)
 //                .setHeight(700)
@@ -52,18 +54,18 @@ public class RecyclerViewActivity extends AppCompatActivity {
 //                .setDimValue(0.5f)
 //                .setDimColor(Color.RED)
 //                .setDimView(mTitleBar)
-                .createPopup();
+                .apply();
 
         //回调在所有Show方法之后updateLocation方法之前执行
         //只有调用showAtAnchorView方法才会执行updateLocation方法
         mRvPop.setOnAttachedWindowListener(new EasyPopup.OnAttachedWindowListener() {
             @Override
-            public void onAttachedWindow(int width, int height, EasyPopup easyPop) {
+            public void onAttachedWindow(BasePopup basePopup, int width, int height, int anchorW, int anchorH) {
                 Log.i(TAG, "onAttachedWindow: width=" + width);
                 int offsetX = (getResources().getDisplayMetrics().widthPixels - width) / 2
                         - getResources().getDimensionPixelSize(R.dimen.dp_30);
                 //重新设置偏移量
-                easyPop.setOffsetX(-offsetX);
+                mRvPop.setOffsetX(-offsetX);
             }
         });
     }

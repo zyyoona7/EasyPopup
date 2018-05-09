@@ -1,6 +1,5 @@
 package com.zyyoona7.easypopup.easypop;
 
-import android.content.Context;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -8,7 +7,7 @@ import android.view.ViewGroup;
 
 import com.blankj.utilcode.util.SizeUtils;
 import com.zyyoona7.easypopup.R;
-import com.zyyoona7.lib.BaseCustomPopup;
+import com.zyyoona7.lib.BasePopup;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,12 +16,12 @@ import java.util.List;
  * Created by zyyoona7 on 2017/8/7.
  */
 
-public class GiftPopup extends BaseCustomPopup {
+public class GiftPopup extends BasePopup<GiftPopup> {
 
     private RecyclerView mRecyclerView;
 
-    protected GiftPopup(Context context) {
-        super(context);
+    public static GiftPopup create(){
+        return new GiftPopup();
     }
 
     @Override
@@ -35,8 +34,8 @@ public class GiftPopup extends BaseCustomPopup {
 
     @Override
     protected void initViews(View view) {
-        mRecyclerView = getView(R.id.rv_gift);
-        mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 4, GridLayoutManager.VERTICAL, false));
+        mRecyclerView = findViewById(R.id.rv_gift);
+        mRecyclerView.setLayoutManager(new GridLayoutManager(mRecyclerView.getContext(), 4, GridLayoutManager.VERTICAL, false));
         List<String> list = createList();
         GiftAdapter adapter = new GiftAdapter();
         adapter.setNewData(list);

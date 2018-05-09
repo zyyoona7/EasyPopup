@@ -23,6 +23,6 @@ android {
 }
 
 dependencies {
-    provided fileTree(dir: 'libs', include: ['*.jar'])
-    provided "com.android.support:support-compat:$support_version"
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "com.android.support:support-compat:$support_version"
 }

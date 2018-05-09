@@ -9,21 +9,25 @@ import android.widget.PopupWindow;
 
 import com.blankj.utilcode.util.SizeUtils;
 import com.zyyoona7.easypopup.R;
-import com.zyyoona7.lib.BaseCustomPopup;
+import com.zyyoona7.lib.BasePopup;
 
 /**
  * Created by zyyoona7 on 2018/3/12.
  */
 
-public class CmmtPopup extends BaseCustomPopup {
+public class CmmtPopup extends BasePopup<CmmtPopup> {
 
     private View.OnClickListener mCancelListener;
     private View.OnClickListener mOkListener;
     AppCompatTextView mCancelTv;
     AppCompatTextView mOkTv;
 
+    public static CmmtPopup create(Context context) {
+        return new CmmtPopup(context);
+    }
+
     public CmmtPopup(Context context) {
-        super(context);
+        setContext(context);
     }
 
     @Override
@@ -39,23 +43,25 @@ public class CmmtPopup extends BaseCustomPopup {
     @Override
     protected void initViews(View view) {
 
-        mCancelTv = getView(R.id.tv_cancel);
-        mOkTv = getView(R.id.tv_ok);
+        mCancelTv = findViewById(R.id.tv_cancel);
+        mOkTv = findViewById(R.id.tv_ok);
 
     }
 
-    public void setOnCancelClickListener(View.OnClickListener listener) {
+    public CmmtPopup setOnCancelClickListener(View.OnClickListener listener) {
         if (mCancelTv == null) {
-            return;
+            return this;
         }
         mCancelTv.setOnClickListener(listener);
+        return this;
     }
 
-    public void setOnOkClickListener(View.OnClickListener listener) {
+    public CmmtPopup setOnOkClickListener(View.OnClickListener listener) {
         if (mOkTv == null) {
-            return;
+            return this;
         }
         mOkTv.setOnClickListener(listener);
+        return this;
     }
 }
 

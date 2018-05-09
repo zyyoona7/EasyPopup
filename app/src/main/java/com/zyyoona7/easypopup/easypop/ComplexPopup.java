@@ -7,20 +7,24 @@ import android.widget.Button;
 
 import com.blankj.utilcode.util.SizeUtils;
 import com.zyyoona7.easypopup.R;
-import com.zyyoona7.lib.BaseCustomPopup;
+import com.zyyoona7.lib.BasePopup;
 
 /**
  * Created by zyyoona7 on 2017/8/4.
  */
 
-public class ComplexPopup extends BaseCustomPopup {
+public class ComplexPopup extends BasePopup<ComplexPopup> {
     private static final String TAG = "ComplexPopup";
 
     private Button mOkBtn;
     private Button mCancelBtn;
 
+    public static ComplexPopup create(Context context){
+        return new ComplexPopup(context);
+    }
+
     protected ComplexPopup(Context context) {
-        super(context);
+        setContext(context);
     }
 
 
@@ -35,8 +39,8 @@ public class ComplexPopup extends BaseCustomPopup {
 
     @Override
     protected void initViews(View view) {
-        mOkBtn = getView(R.id.btn_ok);
-        mCancelBtn = getView(R.id.btn_cancel);
+        mOkBtn = findViewById(R.id.btn_ok);
+        mCancelBtn = findViewById(R.id.btn_cancel);
 
         mOkBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,7 +57,7 @@ public class ComplexPopup extends BaseCustomPopup {
         });
     }
 
-    public void setAbc(){
+    public void setAbc() {
 
     }
 
