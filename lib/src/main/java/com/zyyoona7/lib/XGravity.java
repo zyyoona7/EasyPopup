@@ -10,14 +10,14 @@ import java.lang.annotation.RetentionPolicy;
  */
 
 @IntDef({
-        HorizontalGravity.CENTER,
-        HorizontalGravity.LEFT,
-        HorizontalGravity.RIGHT,
-        HorizontalGravity.ALIGN_LEFT,
-        HorizontalGravity.ALIGN_RIGHT,
+        XGravity.CENTER,
+        XGravity.LEFT,
+        XGravity.RIGHT,
+        XGravity.ALIGN_LEFT,
+        XGravity.ALIGN_RIGHT,
 })
 @Retention(RetentionPolicy.SOURCE)
-public @interface HorizontalGravity {
+public @interface XGravity {
     int CENTER = 0;
     int LEFT = 1;
     int RIGHT = 2;

@@ -1,18 +1,21 @@
 package com.zyyoona7.easypopup.easypop;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.zyyoona7.easypopup.R;
 import com.zyyoona7.lib.BasePopup;
 import com.zyyoona7.lib.EasyPopup;
-import com.zyyoona7.lib.HorizontalGravity;
-import com.zyyoona7.lib.VerticalGravity;
+import com.zyyoona7.lib.XGravity;
+import com.zyyoona7.lib.YGravity;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,6 +27,9 @@ public class RecyclerViewActivity extends AppCompatActivity {
     private RecyclerPopAdapter mPopAdapter;
     private RecyclerView mRecyclerView;
     private EasyPopup mRvPop;
+
+    private float mLastX;
+    private float mLastY;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,11 +64,11 @@ public class RecyclerViewActivity extends AppCompatActivity {
 
         //回调在所有Show方法之后updateLocation方法之前执行
         //只有调用showAtAnchorView方法才会执行updateLocation方法
-        mRvPop.setOnAttachedWindowListener(new EasyPopup.OnAttachedWindowListener() {
+        mRvPop.setOnMeasureFinishedListener(new BasePopup.OnMeasureFinishedListener() {
             @Override
-            public void onAttachedWindow(BasePopup basePopup, int width, int height, int anchorW, int anchorH) {
-                Log.i(TAG, "onAttachedWindow: width=" + width);
-                int offsetX = (getResources().getDisplayMetrics().widthPixels - width) / 2
+            public void onMeasureFinished(BasePopup basePopup, int popWidth, int popHeight, int anchorW, int anchorH) {
+                Log.i(TAG, "onMeasureFinished: width=" + popWidth);
+                int offsetX = (getResources().getDisplayMetrics().widthPixels - popWidth) / 2
                         - getResources().getDimensionPixelSize(R.dimen.dp_30);
                 //重新设置偏移量
                 mRvPop.setOffsetX(-offsetX);
@@ -78,10 +84,32 @@ public class RecyclerViewActivity extends AppCompatActivity {
                 view.getLocationOnScreen(locations);
                 Log.i(TAG, Arrays.toString(locations));
                 if (locations[1] > getResources().getDisplayMetrics().heightPixels / 2) {
-                    mRvPop.showAtAnchorView(view, VerticalGravity.ABOVE, HorizontalGravity.LEFT);
+                    mRvPop.showAtAnchorView(view, YGravity.ABOVE, XGravity.LEFT);
                 } else {
-                    mRvPop.showAtAnchorView(view, VerticalGravity.BELOW, HorizontalGravity.LEFT);
+                    mRvPop.showAtAnchorView(view, YGravity.BELOW, XGravity.LEFT);
                 }
+            }
+        });
+
+        mPopAdapter.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    mLastX = event.getRawX();
+                    mLastY = event.getRawY();
+                    LogUtils.i("onTouch x=" + mLastX + ",y=" + mLastY);
+                }
+                return false;
+            }
+        });
+
+        mPopAdapter.setOnItemLongClickListener(new BaseQuickAdapter.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(BaseQuickAdapter adapter, View view, int position) {
+                LogUtils.i("onLongClick");
+                // TODO: 2018/5/10 判断屏幕上下左右的边界来选择弹出方向
+                mRvPop.showAtLocation(view, Gravity.NO_GRAVITY, (int) mLastX, (int) mLastY);
+                return true;
             }
         });
     }

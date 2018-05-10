@@ -10,14 +10,14 @@ import java.lang.annotation.RetentionPolicy;
  */
 
 @IntDef({
-        VerticalGravity.CENTER,
-        VerticalGravity.ABOVE,
-        VerticalGravity.BELOW,
-        VerticalGravity.ALIGN_TOP,
-        VerticalGravity.ALIGN_BOTTOM,
+        YGravity.CENTER,
+        YGravity.ABOVE,
+        YGravity.BELOW,
+        YGravity.ALIGN_TOP,
+        YGravity.ALIGN_BOTTOM,
 })
 @Retention(RetentionPolicy.SOURCE)
-public @interface VerticalGravity {
+public @interface YGravity {
     int CENTER = 0;
     int ABOVE = 1;
     int BELOW = 2;

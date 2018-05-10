@@ -15,8 +15,8 @@ import com.zyyoona7.easypopup.R;
 import com.zyyoona7.easypopup.base.BaseActivity;
 import com.zyyoona7.easypopup.views.TitleBar;
 import com.zyyoona7.lib.EasyPopup;
-import com.zyyoona7.lib.HorizontalGravity;
-import com.zyyoona7.lib.VerticalGravity;
+import com.zyyoona7.lib.XGravity;
+import com.zyyoona7.lib.YGravity;
 
 public class EasyPopActivity extends BaseActivity implements View.OnClickListener {
     private static final String TAG = "EasyPopActivity";
@@ -124,7 +124,7 @@ public class EasyPopActivity extends BaseActivity implements View.OnClickListene
     }
 
     private void showQQPop(View view) {
-        mQQPop.showAtAnchorView(view, VerticalGravity.BELOW, HorizontalGravity.LEFT, SizeUtils.dp2px(30), 0);
+        mQQPop.showAtAnchorView(view, YGravity.BELOW, XGravity.LEFT, SizeUtils.dp2px(30), 0);
     }
 
     private void initWeiboPop() {
@@ -136,7 +136,7 @@ public class EasyPopActivity extends BaseActivity implements View.OnClickListene
     }
 
     private void showWeiboPop(View view) {
-        mWeiboPop.showAtAnchorView(view, VerticalGravity.BELOW, HorizontalGravity.CENTER, 0, 0);
+        mWeiboPop.showAtAnchorView(view, YGravity.BELOW, XGravity.CENTER, 0, 0);
     }
 
     private void initCirclePop() {
@@ -171,7 +171,7 @@ public class EasyPopActivity extends BaseActivity implements View.OnClickListene
     }
 
     private void showCirclePop(View view) {
-        mCirclePop.showAtAnchorView(view, VerticalGravity.CENTER, HorizontalGravity.LEFT, 0, 0);
+        mCirclePop.showAtAnchorView(view, YGravity.CENTER, XGravity.LEFT, 0, 0);
     }
 
     private void initAbovePop() {
@@ -188,11 +188,11 @@ public class EasyPopActivity extends BaseActivity implements View.OnClickListene
     }
 
     private void showAbovePop(View view) {
-        mAbovePop.showAtAnchorView(view, VerticalGravity.ABOVE, HorizontalGravity.CENTER);
+        mAbovePop.showAtAnchorView(view, YGravity.ABOVE, XGravity.CENTER);
     }
 
     private void showRightPop(View view) {
-        mAbovePop.showAtAnchorView(view, VerticalGravity.CENTER, HorizontalGravity.RIGHT);
+        mAbovePop.showAtAnchorView(view, YGravity.CENTER, XGravity.RIGHT);
     }
 
     private void initBgDimPop() {
@@ -205,7 +205,7 @@ public class EasyPopActivity extends BaseActivity implements View.OnClickListene
     }
 
     private void showBgDimPop(View view) {
-        mBgDimPop.showAtAnchorView(view, VerticalGravity.ALIGN_TOP, HorizontalGravity.ALIGN_LEFT);
+        mBgDimPop.showAtAnchorView(view, YGravity.ALIGN_TOP, XGravity.ALIGN_LEFT);
     }
 
     private void initAnyBgDimPop() {
@@ -220,7 +220,7 @@ public class EasyPopActivity extends BaseActivity implements View.OnClickListene
     }
 
     private void showAnyBgDimPop(View view) {
-        mAnyBgDimPop.showAtAnchorView(view, VerticalGravity.ALIGN_BOTTOM, HorizontalGravity.ALIGN_RIGHT);
+        mAnyBgDimPop.showAtAnchorView(view, YGravity.ALIGN_BOTTOM, XGravity.ALIGN_RIGHT);
     }
 
     private void initGiftPop() {
@@ -240,7 +240,7 @@ public class EasyPopActivity extends BaseActivity implements View.OnClickListene
     }
 
     private void showComplexPop(View view) {
-        mComplexPopup.showAtAnchorView(view, VerticalGravity.ABOVE, HorizontalGravity.LEFT);
+        mComplexPopup.showAtAnchorView(view, YGravity.ABOVE, XGravity.LEFT);
     }
 
     private void initCmmtPop() {

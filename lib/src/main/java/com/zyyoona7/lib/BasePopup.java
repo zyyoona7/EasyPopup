@@ -22,7 +22,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroupOverlay;
-import android.view.ViewTreeObserver;
 import android.widget.PopupWindow;
 
 /**
@@ -77,18 +76,18 @@ public abstract class BasePopup<T extends BasePopup> implements PopupWindow.OnDi
     private boolean mFocusAndOutsideEnable;
 
     private View mAnchorView;
-    @VerticalGravity
-    private int mVerticalGravity = VerticalGravity.BELOW;
-    @HorizontalGravity
-    private int mHorizontalGravity = HorizontalGravity.LEFT;
+    @YGravity
+    private int mYGravity = YGravity.BELOW;
+    @XGravity
+    private int mXGravity = XGravity.LEFT;
     private int mOffsetX;
     private int mOffsetY;
 
-    //是否只是获取宽高
-    //getViewTreeObserver监听时
-    private boolean isOnlyGetWH = true;
+    //传统的显示方法是否需要测量宽高
+    //showAsDropDown() showAtLocation()系列
+    private boolean isNeedMeasureWH = false;
 
-    private OnAttachedWindowListener mOnAttachedWindowListener;
+    private OnMeasureFinishedListener mOnMeasureFinishedListener;
 
     protected T self() {
         //noinspection unchecked
@@ -292,13 +291,13 @@ public abstract class BasePopup<T extends BasePopup> implements PopupWindow.OnDi
         return self();
     }
 
-    public T setVerticalGravity(@VerticalGravity int verticalGravity) {
-        this.mVerticalGravity = verticalGravity;
+    public T setYGravity(@YGravity int yGravity) {
+        this.mYGravity = yGravity;
         return self();
     }
 
-    public T setHorizontalGravity(@VerticalGravity int horizontalGravity) {
-        this.mHorizontalGravity = horizontalGravity;
+    public T setXGravity(@XGravity int yGravity) {
+        this.mXGravity = yGravity;
         return self();
     }
 
@@ -377,6 +376,18 @@ public abstract class BasePopup<T extends BasePopup> implements PopupWindow.OnDi
     }
 
     /**
+     * 传统模式时是否需要测量宽高
+     * showAsDropDown() showAtLocation()系列方法
+     *
+     * @param needMeasureWH
+     * @return
+     */
+    public T setNeedMeasureWH(boolean needMeasureWH) {
+        this.isNeedMeasureWH = needMeasureWH;
+        return self();
+    }
+
+    /**
      * 检查是否调用了 apply() 方法
      */
     private void checkIsApply() {
@@ -407,13 +418,15 @@ public abstract class BasePopup<T extends BasePopup> implements PopupWindow.OnDi
         //防止忘记调用 apply() 方法
         checkIsApply();
 
-        isOnlyGetWH = true;
         handleBackgroundDim();
         mAnchorView = anchor;
         mOffsetX = offsetX;
         mOffsetY = offsetY;
-        addGlobalLayoutListener(mPopupWindow.getContentView());
-        mPopupWindow.showAsDropDown(anchor, offsetX, offsetY);
+        //是否需要重新测量宽高并执行测量结束回调
+        if (isNeedMeasureWH) {
+            needMeasureAndMeasure();
+        }
+        mPopupWindow.showAsDropDown(anchor, mOffsetX, mOffsetY);
         return self();
     }
 
@@ -423,8 +436,10 @@ public abstract class BasePopup<T extends BasePopup> implements PopupWindow.OnDi
 
         handleBackgroundDim();
         mAnchorView = anchor;
-        isOnlyGetWH = true;
-        addGlobalLayoutListener(mPopupWindow.getContentView());
+        //是否需要重新测量宽高并执行测量结束回调
+        if (isNeedMeasureWH) {
+            needMeasureAndMeasure();
+        }
         mPopupWindow.showAsDropDown(anchor);
         return self();
     }
@@ -438,9 +453,11 @@ public abstract class BasePopup<T extends BasePopup> implements PopupWindow.OnDi
         mAnchorView = anchor;
         mOffsetX = offsetX;
         mOffsetY = offsetY;
-        isOnlyGetWH = true;
-        addGlobalLayoutListener(mPopupWindow.getContentView());
-        PopupWindowCompat.showAsDropDown(mPopupWindow, anchor, offsetX, offsetY, gravity);
+        //是否需要重新测量宽高并执行测量结束回调
+        if (isNeedMeasureWH) {
+            needMeasureAndMeasure();
+        }
+        PopupWindowCompat.showAsDropDown(mPopupWindow, anchor, mOffsetX, mOffsetY, gravity);
         return self();
     }
 
@@ -452,9 +469,11 @@ public abstract class BasePopup<T extends BasePopup> implements PopupWindow.OnDi
         mAnchorView = parent;
         mOffsetX = offsetX;
         mOffsetY = offsetY;
-        isOnlyGetWH = true;
-        addGlobalLayoutListener(mPopupWindow.getContentView());
-        mPopupWindow.showAtLocation(parent, gravity, offsetX, offsetY);
+        //是否需要重新测量宽高并执行测量结束回调
+        if (isNeedMeasureWH) {
+            needMeasureAndMeasure();
+        }
+        mPopupWindow.showAtLocation(parent, gravity, mOffsetX, mOffsetY);
         return self();
     }
 
@@ -470,7 +489,7 @@ public abstract class BasePopup<T extends BasePopup> implements PopupWindow.OnDi
         if (mAnchorView == null) {
             return self();
         }
-        return showAtAnchorView(mAnchorView, mVerticalGravity, mHorizontalGravity);
+        return showAtAnchorView(mAnchorView, mYGravity, mXGravity);
     }
 
     /**
@@ -483,7 +502,7 @@ public abstract class BasePopup<T extends BasePopup> implements PopupWindow.OnDi
      * @param vertGravity
      * @param horizGravity
      */
-    public T showAtAnchorView(@NonNull View anchor, @VerticalGravity int vertGravity, @HorizontalGravity int horizGravity) {
+    public T showAtAnchorView(@NonNull View anchor, @YGravity int vertGravity, @XGravity int horizGravity) {
         return showAtAnchorView(anchor, vertGravity, horizGravity, 0, 0);
     }
 
@@ -499,30 +518,49 @@ public abstract class BasePopup<T extends BasePopup> implements PopupWindow.OnDi
      * @param x            水平方向的偏移
      * @param y            垂直方向的偏移
      */
-    public T showAtAnchorView(@NonNull View anchor, @VerticalGravity final int vertGravity, @HorizontalGravity int horizGravity, int x, int y) {
+    public T showAtAnchorView(@NonNull View anchor, @YGravity final int vertGravity, @XGravity int horizGravity, int x, int y) {
         //防止忘记调用 apply() 方法
         checkIsApply();
 
         mAnchorView = anchor;
         mOffsetX = x;
         mOffsetY = y;
-        mVerticalGravity = vertGravity;
-        mHorizontalGravity = horizGravity;
-        isOnlyGetWH = false;
+        mYGravity = vertGravity;
+        mXGravity = horizGravity;
         //处理背景变暗
         handleBackgroundDim();
-        final View contentView = getContentView();
-        addGlobalLayoutListener(contentView);
-        contentView.measure(0, View.MeasureSpec.UNSPECIFIED);
-        final int measuredW = contentView.getMeasuredWidth();
-        final int measuredH = contentView.getMeasuredHeight();
+        //测量并为宽高赋值
+        needMeasureAndMeasure();
 
-        x = calculateX(anchor, horizGravity, measuredW, x);
-        y = calculateY(anchor, vertGravity, measuredH, y);
+        x = calculateX(anchor, horizGravity, mWidth, mOffsetX);
+        y = calculateY(anchor, vertGravity, mHeight, mOffsetY);
 //        Log.i(TAG, "showAtAnchorView: w=" + measuredW + ",y=" + measuredH);
         PopupWindowCompat.showAsDropDown(mPopupWindow, anchor, x, y, Gravity.NO_GRAVITY);
 
         return self();
+    }
+
+    /**
+     * 是否需要测量 contentView的大小
+     * 如果需要重新测量并为宽高赋值
+     * NOTE：将之前的添加mOnGlobalLayoutListener 解决宽高度固定或者有ScrollView导致位置不准的情况替换成此方法
+     */
+    private void needMeasureAndMeasure() {
+        final View contentView = getContentView();
+        if (mWidth <= 0 || mHeight <= 0) {
+            contentView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+            if (mWidth <= 0) {
+                mWidth = contentView.getMeasuredWidth();
+            }
+            if (mHeight <= 0) {
+                mHeight = contentView.getMeasuredHeight();
+            }
+        }
+        //宽高测量完成时的回调
+        if (mOnMeasureFinishedListener != null) {
+            mOnMeasureFinishedListener.onMeasureFinished(this, mWidth, mHeight,
+                    mAnchorView == null ? 0 : mAnchorView.getWidth(), mAnchorView == null ? 0 : mAnchorView.getHeight());
+        }
     }
 
     /**
@@ -536,23 +574,23 @@ public abstract class BasePopup<T extends BasePopup> implements PopupWindow.OnDi
      */
     private int calculateY(View anchor, int vertGravity, int measuredH, int y) {
         switch (vertGravity) {
-            case VerticalGravity.ABOVE:
+            case YGravity.ABOVE:
                 //anchor view之上
                 y -= measuredH + anchor.getHeight();
                 break;
-            case VerticalGravity.ALIGN_BOTTOM:
+            case YGravity.ALIGN_BOTTOM:
                 //anchor view底部对齐
                 y -= measuredH;
                 break;
-            case VerticalGravity.CENTER:
+            case YGravity.CENTER:
                 //anchor view垂直居中
                 y -= anchor.getHeight() / 2 + measuredH / 2;
                 break;
-            case VerticalGravity.ALIGN_TOP:
+            case YGravity.ALIGN_TOP:
                 //anchor view顶部对齐
                 y -= anchor.getHeight();
                 break;
-            case VerticalGravity.BELOW:
+            case YGravity.BELOW:
                 //anchor view之下
                 // Default position.
                 break;
@@ -572,23 +610,23 @@ public abstract class BasePopup<T extends BasePopup> implements PopupWindow.OnDi
      */
     private int calculateX(View anchor, int horizGravity, int measuredW, int x) {
         switch (horizGravity) {
-            case HorizontalGravity.LEFT:
+            case XGravity.LEFT:
                 //anchor view左侧
                 x -= measuredW;
                 break;
-            case HorizontalGravity.ALIGN_RIGHT:
+            case XGravity.ALIGN_RIGHT:
                 //与anchor view右边对齐
                 x -= measuredW - anchor.getWidth();
                 break;
-            case HorizontalGravity.CENTER:
+            case XGravity.CENTER:
                 //anchor view水平居中
                 x += anchor.getWidth() / 2 - measuredW / 2;
                 break;
-            case HorizontalGravity.ALIGN_LEFT:
+            case XGravity.ALIGN_LEFT:
                 //与anchor view左边对齐
                 // Default position.
                 break;
-            case HorizontalGravity.RIGHT:
+            case XGravity.RIGHT:
                 //anchor view右侧
                 x += anchor.getWidth();
                 break;
@@ -596,48 +634,6 @@ public abstract class BasePopup<T extends BasePopup> implements PopupWindow.OnDi
 
         return x;
     }
-
-    /**
-     * 更新PopupWindow位置，校验PopupWindow位置
-     * 修复高度或者宽度写死时或者内部有ScrollView时，弹出的位置不准确问题
-     *
-     * @param width
-     * @param height
-     * @param anchor
-     * @param vertGravity
-     * @param horizGravity
-     * @param x
-     * @param y
-     */
-    private void updateLocation(int width, int height, @NonNull View anchor, @VerticalGravity final int vertGravity, @HorizontalGravity int horizGravity, int x, int y) {
-        if (mPopupWindow == null) {
-            return;
-        }
-        x = calculateX(anchor, horizGravity, width, x);
-        y = calculateY(anchor, vertGravity, height, y);
-//        Log.i(TAG, "updateLocation: x=" + width + ",y=" + height);
-        mPopupWindow.update(anchor, x, y, width, height);
-    }
-
-    //监听器，用于PopupWindow弹出时获取准确的宽高
-    private final ViewTreeObserver.OnGlobalLayoutListener mOnGlobalLayoutListener = new ViewTreeObserver.OnGlobalLayoutListener() {
-        @Override
-        public void onGlobalLayout() {
-            mWidth = getContentView().getWidth();
-            mHeight = getContentView().getHeight();
-            //回调
-            if (mOnAttachedWindowListener != null) {
-                mOnAttachedWindowListener.onAttachedWindow(BasePopup.this, mWidth, mHeight, mAnchorView.getWidth(), mAnchorView.getHeight());
-            }
-            //只获取宽高时，不执行更新操作
-            if (isOnlyGetWH) {
-                removeGlobalLayoutListener();
-                return;
-            }
-            updateLocation(mWidth, mHeight, mAnchorView, mVerticalGravity, mHorizontalGravity, mOffsetX, mOffsetY);
-            removeGlobalLayoutListener();
-        }
-    };
 
     /**
      * 设置监听器
@@ -649,8 +645,8 @@ public abstract class BasePopup<T extends BasePopup> implements PopupWindow.OnDi
         return self();
     }
 
-    public T setOnAttachedWindowListener(OnAttachedWindowListener listener) {
-        this.mOnAttachedWindowListener = listener;
+    public T setOnMeasureFinishedListener(OnMeasureFinishedListener listener) {
+        this.mOnMeasureFinishedListener = listener;
         return self();
     }
 
@@ -755,18 +751,56 @@ public abstract class BasePopup<T extends BasePopup> implements PopupWindow.OnDi
         return mPopupWindow;
     }
 
-    public int getVerticalGravity() {
-        return mVerticalGravity;
+    /**
+     * 获取PopupWindow 宽
+     *
+     * @return
+     */
+    public int getWidth() {
+        return mWidth;
     }
 
-    public int getHorizontalGravity() {
-        return mHorizontalGravity;
+    /**
+     * 获取PopupWindow 高
+     *
+     * @return
+     */
+    public int getHeight() {
+        return mHeight;
     }
 
+    /**
+     * 获取纵向Gravity
+     *
+     * @return
+     */
+    public int getXGravity() {
+        return mYGravity;
+    }
+
+    /**
+     * 获取横向Gravity
+     *
+     * @return
+     */
+    public int getYGravity() {
+        return mXGravity;
+    }
+
+    /**
+     * 获取x轴方向的偏移
+     *
+     * @return
+     */
     public int getOffsetX() {
         return mOffsetX;
     }
 
+    /**
+     * 获取y轴方向的偏移
+     *
+     * @return
+     */
     public int getOffsetY() {
         return mOffsetY;
     }
@@ -817,7 +851,6 @@ public abstract class BasePopup<T extends BasePopup> implements PopupWindow.OnDi
             mOnDismissListener.onDismiss();
         }
 
-        removeGlobalLayoutListener();
         //清除背景变暗
         clearBackgroundDim();
         if (mPopupWindow != null && mPopupWindow.isShowing()) {
@@ -826,35 +859,21 @@ public abstract class BasePopup<T extends BasePopup> implements PopupWindow.OnDi
         onPopupWindowDismiss();
     }
 
-    private void addGlobalLayoutListener(View contentView) {
-        contentView.getViewTreeObserver().addOnGlobalLayoutListener(mOnGlobalLayoutListener);
-    }
-
-    private void removeGlobalLayoutListener() {
-        if (getContentView() != null) {
-            if (Build.VERSION.SDK_INT >= 16) {
-                getContentView().getViewTreeObserver().removeOnGlobalLayoutListener(mOnGlobalLayoutListener);
-            } else {
-                getContentView().getViewTreeObserver().removeGlobalOnLayoutListener(mOnGlobalLayoutListener);
-            }
-        }
-    }
-
     /**
      * PopupWindow是否显示在window中
      * 用于获取准确的PopupWindow宽高，可以重新设置偏移量
      */
-    public interface OnAttachedWindowListener {
+    public interface OnMeasureFinishedListener {
 
         /**
          * 在 show方法之后 updateLocation之前执行
          *
-         * @param width   PopupWindow准确的宽
-         * @param height  PopupWindow准确的高
-         * @param anchorW 锚点View宽
-         * @param anchorH 锚点View高
+         * @param popWidth  PopupWindow准确的宽
+         * @param popHeight PopupWindow准确的高
+         * @param anchorW   锚点View宽
+         * @param anchorH   锚点View高
          */
-        void onAttachedWindow(BasePopup basePopup, int width, int height, int anchorW, int anchorH);
+        void onMeasureFinished(BasePopup basePopup, int popWidth, int popHeight, int anchorW, int anchorH);
     }
 
 }
