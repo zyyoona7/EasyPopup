@@ -15,19 +15,38 @@
         <item name="android:windowIsTranslucent">true</item>
     </style>
 
-    <style name="CirclePopAnim" parent="@android:style/Animation.Activity">
+    <style name="RightPopAnim" parent="@android:style/Animation.Activity">
         <item name="android:windowEnterAnimation">@anim/right_in</item>
         <item name="android:windowExitAnimation">@anim/right_out</item>
     </style>
 
-    <style name="QQPopAnim" parent="@android:style/Animation.Activity">
+    <style name="RightTopPopAnim" parent="@android:style/Animation.Activity">
         <item name="android:windowEnterAnimation">@anim/right_top_in</item>
         <item name="android:windowExitAnimation">@anim/right_top_out</item>
     </style>
 
-    <style name="WeiboPopAnim" parent="@android:style/Animation.Activity">
+    <style name="LeftTopPopAnim" parent="@android:style/Animation.Activity">
+        <item name="android:windowEnterAnimation">@anim/left_top_in</item>
+        <item name="android:windowExitAnimation">@anim/left_top_out</item>
+    </style>
+
+    <style name="LeftBottomPopAnim" parent="@android:style/Animation.Activity">
+        <item name="android:windowEnterAnimation">@anim/left_bottom_in</item>
+        <item name="android:windowExitAnimation">@anim/left_bottom_out</item>
+    </style>
+
+    <style name="RightBottomPopAnim" parent="@android:style/Animation.Activity">
+        <item name="android:windowEnterAnimation">@anim/right_bottom_in</item>
+        <item name="android:windowExitAnimation">@anim/right_bottom_out</item>
+    </style>
+
+    <style name="TopPopAnim" parent="@android:style/Animation.Activity">
         <item name="android:windowEnterAnimation">@anim/top_in</item>
         <item name="android:windowExitAnimation">@anim/top_out</item>
+    </style>
+    <style name="BottomPopAnim" parent="@android:style/Animation.Activity">
+        <item name="android:windowEnterAnimation">@anim/bottom_in</item>
+        <item name="android:windowExitAnimation">@anim/bottom_out</item>
     </style>
 
 </resources>

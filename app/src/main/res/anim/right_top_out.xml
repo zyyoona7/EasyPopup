@@ -6,7 +6,7 @@
         android:fromXScale="100%"
         android:fromYScale="100%"
         android:interpolator="@android:anim/accelerate_interpolator"
-        android:pivotX="80%"
+        android:pivotX="95%"
         android:pivotY="0"
         android:toXScale="0"
         android:toYScale="0"

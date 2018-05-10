@@ -3,7 +3,6 @@ package com.zyyoona7.easypopup.basic;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -83,7 +82,7 @@ public class BasicActivity extends BaseActivity {
     private void initCirclePop() {
         View view = LayoutInflater.from(this).inflate(R.layout.layout_circle_comment, null);
         mCiclePop = new PopupWindow(view, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        mCiclePop.setAnimationStyle(R.style.CirclePopAnim);
+        mCiclePop.setAnimationStyle(R.style.RightPopAnim);
         mCiclePop.setFocusable(true);
         mCiclePop.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         mCiclePop.setOutsideTouchable(true);
@@ -92,7 +91,7 @@ public class BasicActivity extends BaseActivity {
     private void initQQPop() {
         View view = LayoutInflater.from(this).inflate(R.layout.layout_right_pop, null);
         mQQPop = new PopupWindow(view, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        mQQPop.setAnimationStyle(R.style.QQPopAnim);
+        mQQPop.setAnimationStyle(R.style.RightTopPopAnim);
         mQQPop.setFocusable(true);
         mQQPop.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         mQQPop.setOutsideTouchable(true);
@@ -101,7 +100,7 @@ public class BasicActivity extends BaseActivity {
     private void initWeiboPop() {
         View view = LayoutInflater.from(this).inflate(R.layout.layout_center_pop, null);
         mWeiboPop = new PopupWindow(view, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        mWeiboPop.setAnimationStyle(R.style.WeiboPopAnim);
+        mWeiboPop.setAnimationStyle(R.style.TopPopAnim);
         mWeiboPop.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         mWeiboPop.setFocusable(true);
         mWeiboPop.setOutsideTouchable(false);

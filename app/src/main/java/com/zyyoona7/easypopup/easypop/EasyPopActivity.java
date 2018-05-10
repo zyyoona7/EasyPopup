@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.KeyboardUtils;
 import com.blankj.utilcode.util.SizeUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.zyyoona7.easypopup.R;
@@ -113,7 +114,7 @@ public class EasyPopActivity extends BaseActivity implements View.OnClickListene
         mQQPop = EasyPopup.create()
                 .setContext(this)
                 .setContentView(R.layout.layout_right_pop)
-                .setAnimationStyle(R.style.QQPopAnim)
+                .setAnimationStyle(R.style.RightTopPopAnim)
                 .setFocusAndOutsideEnable(true)
 //                .setBackgroundDimEnable(true)
 //                .setDimValue(0.5f)
@@ -130,7 +131,7 @@ public class EasyPopActivity extends BaseActivity implements View.OnClickListene
     private void initWeiboPop() {
         mWeiboPop = EasyPopup.create()
                 .setContentView(this, R.layout.layout_center_pop)
-                .setAnimationStyle(R.style.WeiboPopAnim)
+                .setAnimationStyle(R.style.TopPopAnim)
                 .setFocusAndOutsideEnable(true)
                 .apply();
     }
@@ -142,7 +143,7 @@ public class EasyPopActivity extends BaseActivity implements View.OnClickListene
     private void initCirclePop() {
         mCirclePop = EasyPopup.create()
                 .setContentView(this, R.layout.layout_circle_comment)
-                .setAnimationStyle(R.style.CirclePopAnim)
+                .setAnimationStyle(R.style.RightPopAnim)
                 .setFocusAndOutsideEnable(true)
                 .apply();
         TextView tvZan = mCirclePop.findViewById(R.id.tv_zan);
@@ -172,6 +173,7 @@ public class EasyPopActivity extends BaseActivity implements View.OnClickListene
 
     private void showCirclePop(View view) {
         mCirclePop.showAtAnchorView(view, YGravity.CENTER, XGravity.LEFT, 0, 0);
+//        mCirclePop.getPopupWindow().setAnimationStyle(R.style.QQPopAnim);
     }
 
     private void initAbovePop() {
@@ -249,7 +251,10 @@ public class EasyPopActivity extends BaseActivity implements View.OnClickListene
                     @Override
                     public void onClick(View v) {
                         if (mCmmtPopup.isShowing()) {
-                            mCmmtPopup.dismiss();
+                            //无法隐藏输入法。只有toggle方法起作用...
+                            KeyboardUtils.hideSoftInput(EasyPopActivity.this);
+                            mCmmtPopup.hideSoftInput()
+                                    .dismiss();
                         }
                     }
                 })
@@ -257,7 +262,10 @@ public class EasyPopActivity extends BaseActivity implements View.OnClickListene
                     @Override
                     public void onClick(View v) {
                         if (mCmmtPopup.isShowing()) {
-                            mCmmtPopup.dismiss();
+                            //无法隐藏输入法。只有toggle方法起作用...
+                            KeyboardUtils.hideSoftInput(EasyPopActivity.this);
+                            mCmmtPopup
+                                    .dismiss();
                         }
                     }
                 })
@@ -266,7 +274,8 @@ public class EasyPopActivity extends BaseActivity implements View.OnClickListene
     }
 
     private void showCmmtPop(View view) {
-        mCmmtPopup.showAtLocation(view, Gravity.BOTTOM, 0, 0);
+        mCmmtPopup.showSoftInput()
+                .showAtLocation(view, Gravity.BOTTOM, 0, 0);
     }
 
     @Override

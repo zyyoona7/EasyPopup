@@ -3,19 +3,19 @@
 
     <scale
         android:duration="@android:integer/config_shortAnimTime"
-        android:fromXScale="0"
-        android:fromYScale="0"
+        android:fromXScale="100%"
+        android:fromYScale="100%"
         android:interpolator="@android:anim/accelerate_interpolator"
-        android:pivotX="95%"
+        android:pivotX="5%"
         android:pivotY="0"
-        android:toXScale="100%"
-        android:toYScale="100%"
+        android:toXScale="0"
+        android:toYScale="0"
         />
 
     <alpha
         android:duration="@android:integer/config_shortAnimTime"
-        android:fromAlpha="0"
+        android:fromAlpha="1"
         android:interpolator="@android:anim/accelerate_interpolator"
-        android:toAlpha="1"
+        android:toAlpha="0"
         />
 </set>

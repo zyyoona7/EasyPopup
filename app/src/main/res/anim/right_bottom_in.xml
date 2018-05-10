@@ -7,7 +7,7 @@
         android:fromYScale="0"
         android:interpolator="@android:anim/accelerate_interpolator"
         android:pivotX="95%"
-        android:pivotY="0"
+        android:pivotY="95%"
         android:toXScale="100%"
         android:toYScale="100%"
         />

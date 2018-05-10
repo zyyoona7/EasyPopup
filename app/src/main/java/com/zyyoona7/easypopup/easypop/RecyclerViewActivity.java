@@ -52,7 +52,7 @@ public class RecyclerViewActivity extends AppCompatActivity {
         mRvPop = EasyPopup.create()
                 .setContext(this)
                 .setContentView(R.layout.layout_right_pop)
-                .setAnimationStyle(R.style.QQPopAnim)
+                .setAnimationStyle(R.style.RightTopPopAnim)
 //                .setHeight(700)
 //                .setWidth(600)
                 .setFocusAndOutsideEnable(true)
@@ -64,9 +64,9 @@ public class RecyclerViewActivity extends AppCompatActivity {
 
         //回调在所有Show方法之后updateLocation方法之前执行
         //只有调用showAtAnchorView方法才会执行updateLocation方法
-        mRvPop.setOnMeasureFinishedListener(new BasePopup.OnMeasureFinishedListener() {
+        mRvPop.setOnRealWHAlreadyListener(new BasePopup.OnRealWHAlreadyListener() {
             @Override
-            public void onMeasureFinished(BasePopup basePopup, int popWidth, int popHeight, int anchorW, int anchorH) {
+            public void onRealWHAlready(BasePopup basePopup, int popWidth, int popHeight, int anchorW, int anchorH) {
                 Log.i(TAG, "onMeasureFinished: width=" + popWidth);
                 int offsetX = (getResources().getDisplayMetrics().widthPixels - popWidth) / 2
                         - getResources().getDimensionPixelSize(R.dimen.dp_30);
