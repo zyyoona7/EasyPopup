@@ -53,8 +53,8 @@ public abstract class BasePopup<T extends BasePopup> implements PopupWindow.OnDi
     private boolean mOutsideTouchable = true;
 
     //宽高
-    private int mWidth;
-    private int mHeight;
+    private int mWidth=ViewGroup.LayoutParams.WRAP_CONTENT;
+    private int mHeight=ViewGroup.LayoutParams.WRAP_CONTENT;
 
     private int mAnimationStyle;
 
@@ -76,7 +76,7 @@ public abstract class BasePopup<T extends BasePopup> implements PopupWindow.OnDi
     private Transition mEnterTransition;
     private Transition mExitTransition;
 
-    private boolean mFocusAndOutsideEnable;
+    private boolean mFocusAndOutsideEnable=true;
 
     private View mAnchorView;
     @YGravity
