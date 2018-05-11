@@ -247,8 +247,8 @@ mComplexPopup = ComplexPopup.create(this)
 **i.继承使用修改、命名修改**
 
 - 自定义 PopupWindow 时由原来的继承 **BaseCustomPopup** 改为继承  **BasePopup<T>** （具体使用请查看demo）。
-- 将原来的 createPopup() 方法改为 apply() 方法，新版中 apply() 方法不强制调用，在 showXxx() 方法中会检查，如果忘了调用 apply() 方法会主动调用一次。
-- 将原来的 VerticalGravity、HorizontalGravity 注解改名为 YGravity、XGravity 精简了许多。
+- 将原来的 createPopup() 方法更名为 apply() 方法，新版中 apply() 方法不强制调用，在 showXxx() 方法中会检查，如果忘了调用 apply() 方法会主动调用一次。
+- 将原来的 VerticalGravity、HorizontalGravity 注解更名为 YGravity、XGravity 精简了许多。
 - 将原来的 getView() 方法更名为 findViewById()。
 
 **ii.其他用法调整**
