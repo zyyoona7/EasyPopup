@@ -16,8 +16,10 @@ import com.zyyoona7.lib.BasePopup;
 
 /**
  * Created by zyyoona7 on 2018/3/12.
+ *
+ * PopupWindow 中存在 EditText 隐藏键盘方法不起作用，只有 toggle 键盘方法才起作用
+ * 注：建议由 EditText 需求的弹窗使用 DialogFragment
  */
-
 public class CmmtPopup extends BasePopup<CmmtPopup> {
 
     private View.OnClickListener mCancelListener;
