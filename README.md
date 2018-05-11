@@ -45,21 +45,21 @@ dependencies {
 
 ```java
 private EasyPopup mCirclePop;
-mCirclePop = new EasyPopup(this)
-        .setContentView(R.layout.layout_circle_comment)
-        .setAnimationStyle(R.style.CirclePopAnim)
+mCirclePop = EasyPopup.create()
+        .setContentView(this, R.layout.layout_circle_comment)
+        .setAnimationStyle(R.style.RightPopAnim)
   	//是否允许点击PopupWindow之外的地方消失
         .setFocusAndOutsideEnable(true)
-        .createPopup();
+        .apply();
 ```
 
 **初始化 View**
 
-可以调用 getView() 方法来获取 View 对象。
+可以调用 findViewById() 方法来获取 View 对象。
 
 ```java
-TextView tvZan=mCirclePop.getView(R.id.tv_zan);
-TextView tvComment=mCirclePop.getView(R.id.tv_comment);
+TextView tvZan=mCirclePop.findViewById(R.id.tv_zan);
+TextView tvComment=mCirclePop.findViewById(R.id.tv_comment);
 tvZan.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View v) {
@@ -86,46 +86,46 @@ tvComment.setOnClickListener(new View.OnClickListener() {
  * 相对anchor view显示，适用 宽高不为match_parent
  *
  * @param anchor
- * @param vertGravity  垂直方向的对齐方式
- * @param horizGravity 水平方向的对齐方式
+ * @param yGravity  垂直方向的对齐方式
+ * @param xGravity  水平方向的对齐方式
  * @param x            水平方向的偏移
  * @param y            垂直方向的偏移
  */
-mCirclePop.showAtAnchorView(view, VerticalGravity.CENTER, HorizontalGravity.LEFT, 0, 0);
+mCirclePop.showAtAnchorView(view, YGravity.CENTER, XGravity.LEFT, 0, 0);
 ```
 
 除了 showAtAnchorView() 方法，内部还保留了 showAsDropDown()、showAtLocation() 方法。
 
-**注意：如果使用 VerticalGravity 和 HorizontalGravity 时，请确保使用之后 PopupWindow 没有超出屏幕边界，如果超出屏幕边界，VerticalGravity 和 HorizontalGravity 可能无效，从而达不到你想要的效果。**[#4](https://github.com/zyyoona7/EasyPopup/issues/4)
+**注意：如果使用 YGravity 和 XGravity 时，请确保使用之后 PopupWindow 没有超出屏幕边界，如果超出屏幕边界，YGravity 和 XGravity 可能无效，从而达不到你想要的效果。**[#4](https://github.com/zyyoona7/EasyPopup/issues/4)
 
 **方位注解介绍**
 
-垂直方向对齐：VerticalGravity
+垂直方向对齐：YGravity
 
 ```java
-VerticalGravity.CENTER,//垂直居中
-VerticalGravity.ABOVE,//anchor view之上
-VerticalGravity.BELOW,//anchor view之下
-VerticalGravity.ALIGN_TOP,//与anchor view顶部对齐
-VerticalGravity.ALIGN_BOTTOM,//anchor view底部对齐
+YGravity.CENTER,//垂直居中
+YGravity.ABOVE,//anchor view之上
+YGravity.BELOW,//anchor view之下
+YGravity.ALIGN_TOP,//与anchor view顶部对齐
+YGravity.ALIGN_BOTTOM,//anchor view底部对齐
 ```
 
-水平方向对齐：HorizontalGravity
+水平方向对齐：XGravity
 
 ```java
-HorizontalGravity.CENTER,//水平居中
-HorizontalGravity.LEFT,//anchor view左侧
-HorizontalGravity.RIGHT,//anchor view右侧
-HorizontalGravity.ALIGN_LEFT,//与anchor view左边对齐
-HorizontalGravity.ALIGN_RIGHT,//与anchor view右边对齐
+XGravity.CENTER,//水平居中
+XGravity.LEFT,//anchor view左侧
+XGravity.RIGHT,//anchor view右侧
+XGravity.ALIGN_LEFT,//与anchor view左边对齐
+XGravity.ALIGN_RIGHT,//与anchor view右边对齐
 ```
 
 #### 2. 弹出 PopupWindow 并伴随背景变暗
 
 ```java
-mCirclePop = new EasyPopup(this)
-        .setContentView(R.layout.layout_circle_comment)
-        .setAnimationStyle(R.style.CirclePopAnim)
+mCirclePop = EasyPopup.create()
+        .setContentView(this, R.layout.layout_circle_comment)
+        .setAnimationStyle(R.style.RightPopAnim)
   	//是否允许点击PopupWindow之外的地方消失
         .setFocusAndOutsideEnable(true)
   	//允许背景变暗
@@ -136,7 +136,7 @@ mCirclePop = new EasyPopup(this)
   	.setDimColor(Color.YELLOW)
   	//指定任意 ViewGroup 背景变暗
   	.setDimView(viewGroup)
-        .createPopup();
+        .apply();
 ```
 
 备注：背景变暗效果只支持 4.2 以上的版本。
@@ -144,13 +144,13 @@ mCirclePop = new EasyPopup(this)
 #### 3. 点击 PopupWindow 之外的地方不让其消失
 
 ```java
-mCirclePop = new EasyPopup(this)
-        .setContentView(R.layout.layout_circle_comment)
-        .setAnimationStyle(R.style.CirclePopAnim)
+mCirclePop = EasyPopup.create()
+        .setContentView(this, R.layout.layout_circle_comment)
+        .setAnimationStyle(R.style.RightPopAnim)
   	//是否允许点击PopupWindow之外的地方消失，
   	//设置为false点击之外的地方不会消失，但是会响应返回按钮事件
         .setFocusAndOutsideEnable(false)
-        .createPopup();
+        .apply();
 ```
 
 #### 4. 自定义 PopupWindow
@@ -161,7 +161,7 @@ EasyPopup中自定义了三个生命周期：
 - onPopupWindowViewCreated(View contentView)：PopupWindow 设置完 contentView 和宽高之后调用
 - onPopupWindowDismiss()：PopupWindow dismiss 时调用
 
-自定义 PopupWindow 需继承 BaseCustomPopup 抽象类，实现内部的两个抽象方法：
+自定义 PopupWindow 需继承 BasePopup 抽象类，实现内部的两个抽象方法：
 
 - initAttributes()：可以在此方法中设置 PopupWindow 需要的属性，该方法在 onPopupWindowCreated() 中调用
 - initViews()：在此方法中初始化 view，该方法在 onPopupWindowViewCreated(View contentView) 中调用
@@ -169,32 +169,34 @@ EasyPopup中自定义了三个生命周期：
 **示例**
 
 ```java
-public class ComplexPopup extends BaseCustomPopup {
+public class ComplexPopup extends BasePopup<ComplexPopup> {
     private static final String TAG = "ComplexPopup";
 
     private Button mOkBtn;
     private Button mCancelBtn;
 
+    public static ComplexPopup create(Context context){
+        return new ComplexPopup(context);
+    }
+
     protected ComplexPopup(Context context) {
-        super(context);
+        setContext(context);
     }
 
 
     @Override
     protected void initAttributes() {
-        setContentView(R.layout.layout_complex, 
-                       ViewGroup.LayoutParams.MATCH_PARENT, SizeUtils.dp2px(300));
+        setContentView(R.layout.layout_complex, ViewGroup.LayoutParams.MATCH_PARENT, SizeUtils.dp2px(300));
         setFocusAndOutsideEnable(false)
-          	.setBackgroundDimEnable(true)
+                .setBackgroundDimEnable(true)
                 .setDimValue(0.5f);
-        //setXxx()
-        //...
+		//setXxx() 方法
     }
 
     @Override
     protected void initViews(View view) {
-        mOkBtn = getView(R.id.btn_ok);
-        mCancelBtn = getView(R.id.btn_cancel);
+        mOkBtn = findViewById(R.id.btn_ok);
+        mCancelBtn = findViewById(R.id.btn_cancel);
 
         mOkBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -210,13 +212,12 @@ public class ComplexPopup extends BaseCustomPopup {
             }
         });
     }
-
 }
 ```
 
 ```java
-mComplexPopup = new ComplexPopup(this);
-mComplexPopup.setDimView(mComplexBgDimView)
+mComplexPopup = ComplexPopup.create(this)
+		   .setDimView(mComplexBgDimView)
            .createPopup();
 ```
 
@@ -225,12 +226,12 @@ mComplexPopup.setDimView(mComplexBgDimView)
 | 方法名                                      | 作用                    | 备注        |
 | :--------------------------------------- | --------------------- | --------- |
 | setContentView(View contentView)         | 设置 contentView        |           |
-| setContentView(@LayoutRes int layoutId)  | 设置 contentView        |           |
+| setContentView(Context context, @LayoutRes int layoutId) | 设置 contentView        |           |
 | setWidth(int width)                      | 设置宽                   |           |
 | setHeight(int height)                    | 设置高                   |           |
 | setAnchorView(View view)                 | 设置目标 view             |           |
-| setVerticalGravity(@VerticalGravity int verticalGravity) | 设置垂直方向对齐              |           |
-| setHorizontalGravity(@VerticalGravity int horizontalGravity) | 设置水平方向对齐              |           |
+| setYGravity(@YGravity int yGravity)      | 设置垂直方向对齐              |           |
+| setXGravity(@XGravity int xGravity)      | 设置水平方向对齐              |           |
 | setOffsetX(int offsetX)                  | 设置水平偏移                |           |
 | setOffsetY(int offsetY)                  | 设置垂直                  |           |
 | setAnimationStyle(@StyleRes int animationStyle) | 设置动画风格                |           |
@@ -238,6 +239,23 @@ mComplexPopup.setDimView(mComplexBgDimView)
 | getContext()                             | 获取context             | @Nullable |
 | getPopupWindow()                         | 获取PopupWindow对象       | @Nullable |
 | dismiss()                                | 消失                    |           |
+
+####6.版本迁移
+
+在最新的 1.1.0 版本中对代码结构进行了跳转，在之前的基础上优化了泛型的继承，使得链式调用更加的顺畅；另外对 EasyPopup 继承使用也做了优化；对部分方法的命名也做了调整。
+
+**i.继承使用修改、命名修改**
+
+- 自定义 PopupWindow 时由原来的继承 **BaseCustomPopup** 改为继承  **BasePopup<T>** （具体使用请查看demo）。
+- 将原来的 **createPopup()** 方法改为 **apply()** 方法，新版中 apply() 方法不强制调用，在 showXxx() 方法中会检查，如果忘了调用 apply() 方法会主动调用一次。
+- 将原来的 **VerticalGravity、HorizontalGravity** 注解改名为 **YGravity、XGravity** 精简了许多。
+- 将原来的 **getView()** 方法更名为 **findViewById()**。
+
+**ii.其他用法调整**
+
+- 无论是自定义 PopupWindow 还是调用 EasyPopup 现在在构造方法中不在强制传入 Context 对象了，因为只有在设置 contentView 时传入了 layoutRes 才需要 Context 对象。如果你设置布局的方式是上述方式则需要手动设置 Context 对象：**setContext(Context context)/setContentView(Context context, @LayoutRes int layoutId)** 方法。
+- 直接使用 EasyPopup 时提供了静态方法 **create()/create(Context context)** 方法创建对象，这样用起来比较酷。
+- 加入了更多的方法，欢迎阅读源码。
 
 ### 感谢
 
