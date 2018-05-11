@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -16,76 +15,93 @@
 
     </com.zyyoona7.easypopup.views.TitleBar>
 
-    <LinearLayout
-        android:id="@+id/ll_complex_bg_dim"
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:orientation="vertical">
+        android:fillViewport="true">
 
-        <Button
-            android:id="@+id/btn_circle_comment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:layout_marginTop="40dp"
-            android:text="朋友圈评论"
-            android:textSize="14sp"/>
+        <LinearLayout
+            android:id="@+id/ll_complex_bg_dim"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <Button
-            android:id="@+id/btn_above"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="5dp"
-            android:text="位于按钮之上水平居中弹出"
-            android:textSize="14sp"/>
+            <Button
+                android:id="@+id/btn_circle_comment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginTop="40dp"
+                android:text="朋友圈评论"
+                android:textSize="14sp"/>
 
-        <Button
-            android:id="@+id/btn_right"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="5dp"
-            android:text="位于按钮右侧垂直居中弹出"
-            android:textSize="14sp"/>
+            <Button
+                android:id="@+id/btn_above"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="5dp"
+                android:text="位于按钮之上水平居中弹出"
+                android:textSize="14sp"/>
 
-        <Button
-            android:id="@+id/btn_bg_dim"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="5dp"
-            android:text="弹窗并背景变暗"
-            android:textSize="14sp"/>
+            <Button
+                android:id="@+id/btn_right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="5dp"
+                android:text="位于按钮右侧垂直居中弹出"
+                android:textSize="14sp"/>
 
-        <Button
-            android:id="@+id/btn_bg_dim_any"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="5dp"
-            android:text="弹窗指定标题栏背景变暗"
-            android:textSize="14sp"/>
+            <Button
+                android:id="@+id/btn_bg_dim"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="5dp"
+                android:text="弹窗并背景变暗"
+                android:textSize="14sp"/>
 
-        <Button
-            android:id="@+id/btn_gift"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="5dp"
-            android:text="直播礼物弹窗"
-            android:textSize="14sp"/>
+            <Button
+                android:id="@+id/btn_bg_dim_any"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="5dp"
+                android:text="弹窗指定标题栏背景变暗"
+                android:textSize="14sp"/>
 
-        <Button
-            android:id="@+id/btn_pop_cmmt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="5dp"
-            android:text="评论弹窗"
-            android:textSize="14sp"/>
-    </LinearLayout>
+            <Button
+                android:id="@+id/btn_gift"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="5dp"
+                android:text="直播礼物弹窗"
+                android:textSize="14sp"/>
+
+            <Button
+                android:id="@+id/btn_pop_cmmt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="5dp"
+                android:text="评论弹窗"
+                android:textSize="14sp"/>
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/tv_pop_everywhere"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:background="@drawable/shape_white_5_corner"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:text="长按我试试"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"/>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
 
     <Button
         android:id="@+id/btn_complex"

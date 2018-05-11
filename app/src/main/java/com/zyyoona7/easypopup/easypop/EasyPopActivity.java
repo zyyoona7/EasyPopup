@@ -1,8 +1,10 @@
 package com.zyyoona7.easypopup.easypop;
 
 import android.graphics.Color;
+import android.support.v7.widget.AppCompatTextView;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -10,11 +12,13 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.KeyboardUtils;
+import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SizeUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.zyyoona7.easypopup.R;
 import com.zyyoona7.easypopup.base.BaseActivity;
 import com.zyyoona7.easypopup.views.TitleBar;
+import com.zyyoona7.easypopup.views.TriangleDrawable;
 import com.zyyoona7.lib.EasyPopup;
 import com.zyyoona7.lib.XGravity;
 import com.zyyoona7.lib.YGravity;
@@ -22,7 +26,6 @@ import com.zyyoona7.lib.YGravity;
 public class EasyPopActivity extends BaseActivity implements View.OnClickListener {
     private static final String TAG = "EasyPopActivity";
 
-    // TODO: 2018/5/9 重做Demo 带箭头的背景，微信长按跟随手指位置的弹窗
     private TitleBar mTitleBar;
 
     private Button mCircleBtn;
@@ -33,6 +36,7 @@ public class EasyPopActivity extends BaseActivity implements View.OnClickListene
     private Button mGiftBtn;
     private Button mCmmtBtn;
     private Button mComplexBtn;
+    private AppCompatTextView mEverywhereTv;
 
     private LinearLayout mComplexBgDimView;
 
@@ -46,6 +50,9 @@ public class EasyPopActivity extends BaseActivity implements View.OnClickListene
     private CmmtPopup mCmmtPopup;
     private ComplexPopup mComplexPopup;
 
+    private EverywherePopup mEverywherePopup;
+    private float mLastX;
+    private float mLastY;
 
     @Override
     protected int setLayoutId() {
@@ -70,6 +77,7 @@ public class EasyPopActivity extends BaseActivity implements View.OnClickListene
         mCmmtBtn = findViewById(R.id.btn_pop_cmmt);
         mComplexBtn = findViewById(R.id.btn_complex);
         mComplexBgDimView = findViewById(R.id.ll_complex_bg_dim);
+        mEverywhereTv = findViewById(R.id.tv_pop_everywhere);
         initQQPop();
         initWeiboPop();
         initCirclePop();
@@ -79,6 +87,28 @@ public class EasyPopActivity extends BaseActivity implements View.OnClickListene
         initGiftPop();
         initCmmtPop();
         initComplexPop();
+
+        mEverywherePopup=EverywherePopup.create(this)
+                .apply();
+
+        mEverywhereTv.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    mLastX = event.getRawX();
+                    mLastY = event.getRawY();
+                    LogUtils.i("onTouch x=" + mLastX + ",y=" + mLastY);
+                }
+                return false;
+            }
+        });
+        mEverywhereTv.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                mEverywherePopup.showEverywhere(v,(int)mLastX,(int)mLastY);
+                return true;
+            }
+        });
     }
 
     @Override
@@ -114,7 +144,14 @@ public class EasyPopActivity extends BaseActivity implements View.OnClickListene
         mQQPop = EasyPopup.create()
                 .setContext(this)
                 .setContentView(R.layout.layout_right_pop)
-                .setAnimationStyle(R.style.RightTopPopAnim)
+                .setAnimationStyle(R.style.RightTop2PopAnim)
+                .setOnViewListener(new EasyPopup.OnViewListener() {
+                    @Override
+                    public void initViews(View view) {
+                        View arrowView = view.findViewById(R.id.v_arrow);
+                        arrowView.setBackground(new TriangleDrawable(TriangleDrawable.TOP, Color.parseColor("#88FF88")));
+                    }
+                })
                 .setFocusAndOutsideEnable(true)
 //                .setBackgroundDimEnable(true)
 //                .setDimValue(0.5f)
@@ -125,19 +162,29 @@ public class EasyPopActivity extends BaseActivity implements View.OnClickListene
     }
 
     private void showQQPop(View view) {
-        mQQPop.showAtAnchorView(view, YGravity.BELOW, XGravity.LEFT, SizeUtils.dp2px(30), 0);
+        int offsetX = SizeUtils.dp2px(20) - view.getWidth() / 2;
+        int offsetY = (mTitleBar.getHeight() - view.getHeight()) / 2;
+        mQQPop.showAtAnchorView(view, YGravity.BELOW, XGravity.ALIGN_RIGHT, offsetX, offsetY);
     }
 
     private void initWeiboPop() {
         mWeiboPop = EasyPopup.create()
                 .setContentView(this, R.layout.layout_center_pop)
                 .setAnimationStyle(R.style.TopPopAnim)
+                .setOnViewListener(new EasyPopup.OnViewListener() {
+                    @Override
+                    public void initViews(View view) {
+                        View arrowView = view.findViewById(R.id.v_arrow_weibo);
+                        arrowView.setBackground(new TriangleDrawable(TriangleDrawable.TOP, Color.WHITE));
+                    }
+                })
                 .setFocusAndOutsideEnable(true)
                 .apply();
     }
 
     private void showWeiboPop(View view) {
-        mWeiboPop.showAtAnchorView(view, YGravity.BELOW, XGravity.CENTER, 0, 0);
+        int offsetY = (mTitleBar.getHeight() - view.getHeight()) / 2;
+        mWeiboPop.showAtAnchorView(view, YGravity.BELOW, XGravity.CENTER, 0, offsetY);
     }
 
     private void initCirclePop() {

@@ -9,6 +9,10 @@
     </style>
 
     <style name="AppTheme.NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
     </style>
 
     <style name="AppTheme.Translucent" parent="AppTheme.NoActionBar">
@@ -23,6 +27,11 @@
     <style name="RightTopPopAnim" parent="@android:style/Animation.Activity">
         <item name="android:windowEnterAnimation">@anim/right_top_in</item>
         <item name="android:windowExitAnimation">@anim/right_top_out</item>
+    </style>
+
+    <style name="RightTop2PopAnim" parent="@android:style/Animation.Activity">
+        <item name="android:windowEnterAnimation">@anim/right_top_in_2</item>
+        <item name="android:windowExitAnimation">@anim/right_top_out_2</item>
     </style>
 
     <style name="LeftTopPopAnim" parent="@android:style/Animation.Activity">
