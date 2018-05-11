@@ -217,7 +217,7 @@ public class ComplexPopup extends BasePopup<ComplexPopup> {
 
 ```java
 mComplexPopup = ComplexPopup.create(this)
-		   .setDimView(mComplexBgDimView)
+	   .setDimView(mComplexBgDimView)
            .createPopup();
 ```
 
@@ -240,21 +240,21 @@ mComplexPopup = ComplexPopup.create(this)
 | getPopupWindow()                         | 获取PopupWindow对象       | @Nullable |
 | dismiss()                                | 消失                    |           |
 
-####6.版本迁移
+#### 6.版本迁移
 
 在最新的 1.1.0 版本中对代码结构进行了跳转，在之前的基础上优化了泛型的继承，使得链式调用更加的顺畅；另外对 EasyPopup 继承使用也做了优化；对部分方法的命名也做了调整。
 
 **i.继承使用修改、命名修改**
 
 - 自定义 PopupWindow 时由原来的继承 **BaseCustomPopup** 改为继承  **BasePopup<T>** （具体使用请查看demo）。
-- 将原来的 **createPopup()** 方法改为 **apply()** 方法，新版中 apply() 方法不强制调用，在 showXxx() 方法中会检查，如果忘了调用 apply() 方法会主动调用一次。
-- 将原来的 **VerticalGravity、HorizontalGravity** 注解改名为 **YGravity、XGravity** 精简了许多。
-- 将原来的 **getView()** 方法更名为 **findViewById()**。
+- 将原来的 createPopup() 方法改为 apply() 方法，新版中 apply() 方法不强制调用，在 showXxx() 方法中会检查，如果忘了调用 apply() 方法会主动调用一次。
+- 将原来的 VerticalGravity、HorizontalGravity 注解改名为 YGravity、XGravity 精简了许多。
+- 将原来的 getView() 方法更名为 findViewById()。
 
 **ii.其他用法调整**
 
-- 无论是自定义 PopupWindow 还是调用 EasyPopup 现在在构造方法中不在强制传入 Context 对象了，因为只有在设置 contentView 时传入了 layoutRes 才需要 Context 对象。如果你设置布局的方式是上述方式则需要手动设置 Context 对象：**setContext(Context context)/setContentView(Context context, @LayoutRes int layoutId)** 方法。
-- 直接使用 EasyPopup 时提供了静态方法 **create()/create(Context context)** 方法创建对象，这样用起来比较酷。
+- 无论是自定义 PopupWindow 还是调用 EasyPopup 现在在构造方法中不在强制传入 Context 对象了，因为只有在设置 contentView 时传入了 layoutRes 才需要 Context 对象。如果你设置布局的方式是上述方式则需要手动设置 Context 对象：setContext(Context context)/setContentView(Context context, @LayoutRes int layoutId) 方法。
+- 直接使用 EasyPopup 时提供了静态方法 create()/create(Context context) 方法创建对象，这样用起来比较酷。
 - 加入了更多的方法，欢迎阅读源码。
 
 ### 感谢
