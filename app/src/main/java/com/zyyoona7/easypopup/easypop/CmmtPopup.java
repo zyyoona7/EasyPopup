@@ -1,6 +1,5 @@
 package com.zyyoona7.easypopup.easypop;
 
-import android.app.Activity;
 import android.content.Context;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatTextView;
@@ -12,7 +11,7 @@ import android.widget.PopupWindow;
 import com.blankj.utilcode.util.KeyboardUtils;
 import com.blankj.utilcode.util.SizeUtils;
 import com.zyyoona7.easypopup.R;
-import com.zyyoona7.lib.BasePopup;
+import com.zyyoona7.popup.BasePopup;
 
 /**
  * Created by zyyoona7 on 2018/3/12.

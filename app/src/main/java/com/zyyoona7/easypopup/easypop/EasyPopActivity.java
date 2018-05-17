@@ -19,9 +19,9 @@ import com.zyyoona7.easypopup.R;
 import com.zyyoona7.easypopup.base.BaseActivity;
 import com.zyyoona7.easypopup.views.TitleBar;
 import com.zyyoona7.easypopup.views.TriangleDrawable;
-import com.zyyoona7.lib.EasyPopup;
-import com.zyyoona7.lib.XGravity;
-import com.zyyoona7.lib.YGravity;
+import com.zyyoona7.popup.EasyPopup;
+import com.zyyoona7.popup.XGravity;
+import com.zyyoona7.popup.YGravity;
 
 public class EasyPopActivity extends BaseActivity implements View.OnClickListener {
     private static final String TAG = "EasyPopActivity";

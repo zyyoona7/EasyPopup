@@ -12,10 +12,10 @@ import android.view.View;
 import com.blankj.utilcode.util.LogUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.zyyoona7.easypopup.R;
-import com.zyyoona7.lib.BasePopup;
-import com.zyyoona7.lib.EasyPopup;
-import com.zyyoona7.lib.XGravity;
-import com.zyyoona7.lib.YGravity;
+import com.zyyoona7.popup.BasePopup;
+import com.zyyoona7.popup.EasyPopup;
+import com.zyyoona7.popup.XGravity;
+import com.zyyoona7.popup.YGravity;
 
 import java.util.ArrayList;
 import java.util.Arrays;

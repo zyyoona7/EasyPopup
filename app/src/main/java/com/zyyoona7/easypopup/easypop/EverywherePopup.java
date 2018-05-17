@@ -6,7 +6,7 @@ import android.view.View;
 
 import com.blankj.utilcode.util.ScreenUtils;
 import com.zyyoona7.easypopup.R;
-import com.zyyoona7.lib.BasePopup;
+import com.zyyoona7.popup.BasePopup;
 
 public class EverywherePopup extends BasePopup<EverywherePopup> {
 

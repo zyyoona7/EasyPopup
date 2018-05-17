@@ -1,4 +1,4 @@
-package com.zyyoona7.lib;
+package com.zyyoona7.popup;
 
 import android.support.annotation.IntDef;
 

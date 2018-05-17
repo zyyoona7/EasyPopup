@@ -1,4 +1,4 @@
-package com.zyyoona7.lib;
+package com.zyyoona7.popup;
 
 import android.app.Activity;
 import android.content.Context;
@@ -53,8 +53,8 @@ public abstract class BasePopup<T extends BasePopup> implements PopupWindow.OnDi
     private boolean mOutsideTouchable = true;
 
     //宽高
-    private int mWidth=ViewGroup.LayoutParams.WRAP_CONTENT;
-    private int mHeight=ViewGroup.LayoutParams.WRAP_CONTENT;
+    private int mWidth = ViewGroup.LayoutParams.WRAP_CONTENT;
+    private int mHeight = ViewGroup.LayoutParams.WRAP_CONTENT;
 
     private int mAnimationStyle;
 
@@ -76,7 +76,7 @@ public abstract class BasePopup<T extends BasePopup> implements PopupWindow.OnDi
     private Transition mEnterTransition;
     private Transition mExitTransition;
 
-    private boolean mFocusAndOutsideEnable=true;
+    private boolean mFocusAndOutsideEnable = true;
 
     private View mAnchorView;
     @YGravity
@@ -496,12 +496,11 @@ public abstract class BasePopup<T extends BasePopup> implements PopupWindow.OnDi
     /**
      * 使用此方法需要在创建的时候调用setAnchorView()等属性设置{@see setAnchorView()}
      */
-    public T showAsDropDown() {
+    public void showAsDropDown() {
         if (mAnchorView == null) {
-            return self();
+            return;
         }
-
-        return showAsDropDown(mAnchorView, mOffsetX, mOffsetY);
+        showAsDropDown(mAnchorView, mOffsetX, mOffsetY);
     }
 
     /**
@@ -511,7 +510,7 @@ public abstract class BasePopup<T extends BasePopup> implements PopupWindow.OnDi
      * @param offsetX
      * @param offsetY
      */
-    public T showAsDropDown(View anchor, int offsetX, int offsetY) {
+    public void showAsDropDown(View anchor, int offsetX, int offsetY) {
         //防止忘记调用 apply() 方法
         checkIsApply(false);
 
@@ -524,10 +523,9 @@ public abstract class BasePopup<T extends BasePopup> implements PopupWindow.OnDi
             registerOnGlobalLayoutListener();
         }
         mPopupWindow.showAsDropDown(anchor, mOffsetX, mOffsetY);
-        return self();
     }
 
-    public T showAsDropDown(View anchor) {
+    public void showAsDropDown(View anchor) {
         //防止忘记调用 apply() 方法
         checkIsApply(false);
 
@@ -538,11 +536,10 @@ public abstract class BasePopup<T extends BasePopup> implements PopupWindow.OnDi
             registerOnGlobalLayoutListener();
         }
         mPopupWindow.showAsDropDown(anchor);
-        return self();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    public T showAsDropDown(View anchor, int offsetX, int offsetY, int gravity) {
+    public void showAsDropDown(View anchor, int offsetX, int offsetY, int gravity) {
         //防止忘记调用 apply() 方法
         checkIsApply(false);
 
@@ -555,10 +552,9 @@ public abstract class BasePopup<T extends BasePopup> implements PopupWindow.OnDi
             registerOnGlobalLayoutListener();
         }
         PopupWindowCompat.showAsDropDown(mPopupWindow, anchor, mOffsetX, mOffsetY, gravity);
-        return self();
     }
 
-    public T showAtLocation(View parent, int gravity, int offsetX, int offsetY) {
+    public void showAtLocation(View parent, int gravity, int offsetX, int offsetY) {
         //防止忘记调用 apply() 方法
         checkIsApply(false);
 
@@ -571,7 +567,6 @@ public abstract class BasePopup<T extends BasePopup> implements PopupWindow.OnDi
             registerOnGlobalLayoutListener();
         }
         mPopupWindow.showAtLocation(parent, gravity, mOffsetX, mOffsetY);
-        return self();
     }
 
     /**
@@ -582,11 +577,11 @@ public abstract class BasePopup<T extends BasePopup> implements PopupWindow.OnDi
      * 注意：如果使用 VerticalGravity 和 HorizontalGravity 时，请确保使用之后 PopupWindow 没有超出屏幕边界，
      * 如果超出屏幕边界，VerticalGravity 和 HorizontalGravity 可能无效，从而达不到你想要的效果。
      */
-    public T showAtAnchorView() {
+    public void showAtAnchorView() {
         if (mAnchorView == null) {
-            return self();
+            return;
         }
-        return showAtAnchorView(mAnchorView, mYGravity, mXGravity);
+        showAtAnchorView(mAnchorView, mYGravity, mXGravity);
     }
 
     /**
@@ -599,8 +594,8 @@ public abstract class BasePopup<T extends BasePopup> implements PopupWindow.OnDi
      * @param vertGravity
      * @param horizGravity
      */
-    public T showAtAnchorView(@NonNull View anchor, @YGravity int vertGravity, @XGravity int horizGravity) {
-        return showAtAnchorView(anchor, vertGravity, horizGravity, 0, 0);
+    public void showAtAnchorView(@NonNull View anchor, @YGravity int vertGravity, @XGravity int horizGravity) {
+        showAtAnchorView(anchor, vertGravity, horizGravity, 0, 0);
     }
 
     /**
@@ -615,7 +610,7 @@ public abstract class BasePopup<T extends BasePopup> implements PopupWindow.OnDi
      * @param x            水平方向的偏移
      * @param y            垂直方向的偏移
      */
-    public T showAtAnchorView(@NonNull View anchor, @YGravity final int vertGravity, @XGravity int horizGravity, int x, int y) {
+    public void showAtAnchorView(@NonNull View anchor, @YGravity final int vertGravity, @XGravity int horizGravity, int x, int y) {
         //防止忘记调用 apply() 方法
         checkIsApply(true);
 
@@ -635,7 +630,6 @@ public abstract class BasePopup<T extends BasePopup> implements PopupWindow.OnDi
 //        Log.i(TAG, "showAtAnchorView: w=" + measuredW + ",y=" + measuredH);
         PopupWindowCompat.showAsDropDown(mPopupWindow, anchor, x, y, Gravity.NO_GRAVITY);
 
-        return self();
     }
 
     /**

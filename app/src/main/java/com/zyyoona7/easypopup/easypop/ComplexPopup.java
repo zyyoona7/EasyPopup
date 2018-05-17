@@ -7,7 +7,7 @@ import android.widget.Button;
 
 import com.blankj.utilcode.util.SizeUtils;
 import com.zyyoona7.easypopup.R;
-import com.zyyoona7.lib.BasePopup;
+import com.zyyoona7.popup.BasePopup;
 
 /**
  * Created by zyyoona7 on 2017/8/4.
