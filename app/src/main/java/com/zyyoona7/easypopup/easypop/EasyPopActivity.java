@@ -289,7 +289,8 @@ public class EasyPopActivity extends BaseActivity implements View.OnClickListene
     }
 
     private void showComplexPop(View view) {
-        mComplexPopup.showAtAnchorView(view, YGravity.ABOVE, XGravity.LEFT);
+//        mComplexPopup.showAtAnchorView(view, YGravity.ABOVE, XGravity.LEFT);
+        mComplexPopup.showAtLocation(view,Gravity.BOTTOM,0,0);
     }
 
     private void initCmmtPop() {
