@@ -225,7 +225,7 @@ public abstract class BasePopup<T extends BasePopup> implements PopupWindow.OnDi
     }
 
     protected void onPopupWindowViewCreated(View contentView) {
-        initViews(contentView);
+        initViews(contentView, self());
     }
 
     protected void onPopupWindowDismiss() {
@@ -241,7 +241,7 @@ public abstract class BasePopup<T extends BasePopup> implements PopupWindow.OnDi
      *
      * @param view
      */
-    protected abstract void initViews(View view);
+    protected abstract void initViews(View view, BasePopup popup);
 
     /**
      * 是否需要测量 contentView的大小

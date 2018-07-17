@@ -2,6 +2,7 @@ package com.zyyoona7.popup;
 
 import android.content.Context;
 import android.view.View;
+import android.widget.PopupWindow;
 
 public class EasyPopup extends BasePopup<EasyPopup> {
 
@@ -29,9 +30,9 @@ public class EasyPopup extends BasePopup<EasyPopup> {
     }
 
     @Override
-    protected void initViews(View view) {
+    protected void initViews(View view, BasePopup popup) {
         if (mOnViewListener != null) {
-            mOnViewListener.initViews(view);
+            mOnViewListener.initViews(view, popup);
         }
     }
 
@@ -42,6 +43,6 @@ public class EasyPopup extends BasePopup<EasyPopup> {
 
     public interface OnViewListener {
 
-        void initViews(View view);
+        void initViews(View view, BasePopup popup);
     }
 }
