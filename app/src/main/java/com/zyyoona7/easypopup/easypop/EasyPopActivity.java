@@ -19,6 +19,7 @@ import com.zyyoona7.easypopup.R;
 import com.zyyoona7.easypopup.base.BaseActivity;
 import com.zyyoona7.easypopup.views.TitleBar;
 import com.zyyoona7.easypopup.views.TriangleDrawable;
+import com.zyyoona7.popup.BasePopup;
 import com.zyyoona7.popup.EasyPopup;
 import com.zyyoona7.popup.XGravity;
 import com.zyyoona7.popup.YGravity;
@@ -147,7 +148,7 @@ public class EasyPopActivity extends BaseActivity implements View.OnClickListene
                 .setAnimationStyle(R.style.RightTop2PopAnim)
                 .setOnViewListener(new EasyPopup.OnViewListener() {
                     @Override
-                    public void initViews(View view) {
+                    public void initViews(View view, BasePopup basePopup) {
                         View arrowView = view.findViewById(R.id.v_arrow);
                         arrowView.setBackground(new TriangleDrawable(TriangleDrawable.TOP, Color.parseColor("#88FF88")));
                     }
@@ -173,7 +174,7 @@ public class EasyPopActivity extends BaseActivity implements View.OnClickListene
                 .setAnimationStyle(R.style.TopPopAnim)
                 .setOnViewListener(new EasyPopup.OnViewListener() {
                     @Override
-                    public void initViews(View view) {
+                    public void initViews(View view, BasePopup basePopup) {
                         View arrowView = view.findViewById(R.id.v_arrow_weibo);
                         arrowView.setBackground(new TriangleDrawable(TriangleDrawable.TOP, Color.WHITE));
                     }
@@ -192,24 +193,27 @@ public class EasyPopActivity extends BaseActivity implements View.OnClickListene
                 .setContentView(this, R.layout.layout_circle_comment)
                 .setAnimationStyle(R.style.RightPopAnim)
                 .setFocusAndOutsideEnable(true)
+                .setOnViewListener(new EasyPopup.OnViewListener() {
+                    @Override
+                    public void initViews(View view, final BasePopup popup) {
+                        view.findViewById(R.id.tv_zan).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                ToastUtils.showShort("赞");
+                                popup.dismiss();
+                            }
+                        });
+                        view.findViewById(R.id.tv_comment).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                ToastUtils.showShort("评论");
+                                popup.dismiss();
+                            }
+                        });
+                    }
+                })
                 .apply();
-        TextView tvZan = mCirclePop.findViewById(R.id.tv_zan);
-        TextView tvComment = mCirclePop.findViewById(R.id.tv_comment);
-        tvZan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ToastUtils.showShort("赞");
-                mCirclePop.dismiss();
-            }
-        });
 
-        tvComment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ToastUtils.showShort("评论");
-                mCirclePop.dismiss();
-            }
-        });
         mCirclePop.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
