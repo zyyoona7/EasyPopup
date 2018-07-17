@@ -25,7 +25,7 @@ public class EverywherePopup extends BasePopup<EverywherePopup> {
     }
 
     @Override
-    protected void initViews(View view) {
+    protected void initViews(View view, BasePopup basePopup) {
 
 //        setOnRealWHAlreadyListener(new OnRealWHAlreadyListener() {
 //            @Override
