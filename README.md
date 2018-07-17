@@ -257,6 +257,9 @@ mComplexPopup = ComplexPopup.create(this)
 - 直接使用 EasyPopup 时提供了静态方法 create()/create(Context context) 方法创建对象，这样用起来比较酷。
 - 加入了更多的方法，欢迎阅读源码。
 
+### TODO
+- initViews() 方法返回 EasyPopup 本身
+
 ### 感谢
 
 **[RelativePopupWindow](https://github.com/kakajika/RelativePopupWindow)**<br>
