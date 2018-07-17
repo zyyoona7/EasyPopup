@@ -43,6 +43,6 @@ public class EasyPopup extends BasePopup<EasyPopup> {
 
     public interface OnViewListener {
 
-        void initViews(View view, BasePopup popup);
+        void initViews(View view, EasyPopup popup);
     }
 }
