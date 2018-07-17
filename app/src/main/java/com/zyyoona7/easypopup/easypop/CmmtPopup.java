@@ -47,7 +47,7 @@ public class CmmtPopup extends BasePopup<CmmtPopup> {
     }
 
     @Override
-    protected void initViews(View view, BasePopup basePopup) {
+    protected void initViews(View view, CmmtPopup basePopup) {
 
         mCancelTv = findViewById(R.id.tv_cancel);
         mOkTv = findViewById(R.id.tv_ok);

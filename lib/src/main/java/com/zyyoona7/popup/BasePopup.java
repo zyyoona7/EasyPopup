@@ -241,7 +241,7 @@ public abstract class BasePopup<T extends BasePopup> implements PopupWindow.OnDi
      *
      * @param view
      */
-    protected abstract void initViews(View view, BasePopup popup);
+    protected  abstract void initViews(View view, T popup);
 
     /**
      * 是否需要测量 contentView的大小

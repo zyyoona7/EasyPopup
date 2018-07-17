@@ -33,7 +33,7 @@ public class GiftPopup extends BasePopup<GiftPopup> {
     }
 
     @Override
-    protected void initViews(View view, BasePopup basePopup) {
+    protected void initViews(View view, GiftPopup basePopup) {
         mRecyclerView = findViewById(R.id.rv_gift);
         mRecyclerView.setLayoutManager(new GridLayoutManager(mRecyclerView.getContext(), 4, GridLayoutManager.VERTICAL, false));
         List<String> list = createList();

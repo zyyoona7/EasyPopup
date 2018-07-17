@@ -48,7 +48,7 @@ public class ComplexPopup extends BasePopup<ComplexPopup> {
     }
 
     @Override
-    protected void initViews(View view, BasePopup basePopup) {
+    protected void initViews(View view, ComplexPopup basePopup) {
         mOkBtn = findViewById(R.id.btn_ok);
         mCancelBtn = findViewById(R.id.btn_cancel);
         mRecyclerView = findViewById(R.id.rv_complex);

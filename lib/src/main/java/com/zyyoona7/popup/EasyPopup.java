@@ -30,7 +30,7 @@ public class EasyPopup extends BasePopup<EasyPopup> {
     }
 
     @Override
-    protected void initViews(View view, BasePopup popup) {
+    protected void initViews(View view, EasyPopup popup) {
         if (mOnViewListener != null) {
             mOnViewListener.initViews(view, popup);
         }
