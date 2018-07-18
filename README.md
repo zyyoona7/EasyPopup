@@ -258,7 +258,7 @@ mComplexPopup = ComplexPopup.create(this)
 - 加入了更多的方法，欢迎阅读源码。
 
 ### TODO
-- initViews() 方法返回 EasyPopup 本身
+
 
 ### 感谢
 
