@@ -148,7 +148,7 @@ public class EasyPopActivity extends BaseActivity implements View.OnClickListene
                 .setAnimationStyle(R.style.RightTop2PopAnim)
                 .setOnViewListener(new EasyPopup.OnViewListener() {
                     @Override
-                    public void initViews(View view, BasePopup basePopup) {
+                    public void initViews(View view, EasyPopup basePopup) {
                         View arrowView = view.findViewById(R.id.v_arrow);
                         arrowView.setBackground(new TriangleDrawable(TriangleDrawable.TOP, Color.parseColor("#88FF88")));
                     }
@@ -174,7 +174,7 @@ public class EasyPopActivity extends BaseActivity implements View.OnClickListene
                 .setAnimationStyle(R.style.TopPopAnim)
                 .setOnViewListener(new EasyPopup.OnViewListener() {
                     @Override
-                    public void initViews(View view, BasePopup basePopup) {
+                    public void initViews(View view, EasyPopup basePopup) {
                         View arrowView = view.findViewById(R.id.v_arrow_weibo);
                         arrowView.setBackground(new TriangleDrawable(TriangleDrawable.TOP, Color.WHITE));
                     }
@@ -195,7 +195,7 @@ public class EasyPopActivity extends BaseActivity implements View.OnClickListene
                 .setFocusAndOutsideEnable(true)
                 .setOnViewListener(new EasyPopup.OnViewListener() {
                     @Override
-                    public void initViews(View view, final BasePopup popup) {
+                    public void initViews(View view, final EasyPopup popup) {
                         view.findViewById(R.id.tv_zan).setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
